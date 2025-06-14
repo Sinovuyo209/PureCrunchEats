@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PureCrunchEats - Menu</title>
+    <title>PureCrunchEats - Order Online</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f9f9f9;
         }
         .menu-item {
-            border: 1px solid #eee;
+            background: white;
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .menu-img {
             width: 100%;
             height: 200px;
             object-fit: cover;
             border-radius: 8px;
-            display: block; /* Ensures image appears */
+            display: block;
+            border: 1px solid #ddd;
         }
         .price {
             color: #e91e63;
@@ -30,36 +33,79 @@
             font-size: 1.2em;
             margin: 10px 0;
         }
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>🍽️ PureCrunchEats Menu</h1>
+    <h1>PureCrunchEats Menu</h1>
     
-    <!-- Smoothie Item -->
+    <!-- Smoothie -->
     <div class="menu-item">
-        <img src="smoothie-menu.jpg" alt="Fresh Smoothies" class="menu-img">
+        <img src="smoothie.jpg" alt="Fresh Smoothie" class="menu-img">
         <h2>STRAWBERRY SMOOTHIE</h2>
         <p>Greek yogurt, Milk, Frozen strawberries</p>
         <div class="price">R32</div>
+        <button class="add-to-cart">Add to Cart</button>
     </div>
     
-    <!-- Wings & Fries Item -->
+    <!-- Wings & Fries -->
     <div class="menu-item">
-        <img src="Wings&Fries.jpg" alt="Wings and Fries" class="menu-img">
+        <img src="wingsfries.jpg" alt="Wings and Fries" class="menu-img">
         <h2>WINGS & FRIES COMBO</h2>
         <p>4 crispy wings with golden fries</p>
         <div class="price">R45</div>
+        <button class="add-to-cart">Add to Cart</button>
     </div>
 
-    <!-- Debugging Help (remove after images work) -->
-    <div style="margin-top: 40px; padding: 15px; background: #f8f8f8; border-radius: 8px;">
-        <h3>ℹ️ Image Check</h3>
-        <p>These links must work:</p>
-        <ul>
-            <li><a href="smoothie-menu.jpg" target="_blank">smoothie-menu.jpg</a></li>
-            <li><a href="Wings&Fries.jpg" target="_blank">Wings&Fries.jpg</a></li>
-        </ul>
-        <p>If they don't open, your images aren't uploaded correctly.</p>
+    <!-- Payment Section -->
+    <div class="menu-item" style="background: #e8f5e9;">
+        <h2>Complete Your Order</h2>
+        <p><strong>Total: R<span id="total">0</span></strong></p>
+        
+        <!-- WhatsApp Payment Form -->
+        <form id="paymentForm">
+            <input type="text" placeholder="Your Name" required style="width:100%; padding:8px; margin:5px 0;">
+            <input type="tel" placeholder="WhatsApp Number" required style="width:100%; padding:8px; margin:5px 0;">
+            <input type="text" placeholder="Payment Reference" required style="width:100%; padding:8px; margin:5px 0;">
+            <p>Upload payment proof (screenshot):</p>
+            <input type="file" accept="image/*" required style="margin:5px 0;">
+            
+            <!-- WhatsApp Submit Button -->
+            <a href="#" id="whatsappSubmit" class="whatsapp-btn">
+                Send via WhatsApp
+            </a>
+        </form>
+        
+        <p style="font-size:0.8em; margin-top:20px;">
+            <strong>Payment Instructions:</strong><br>
+            1. Send payment to Capitec 0731575601<br>
+            2. Submit proof using this form<br>
+            3. We'll confirm via WhatsApp
+        </p>
     </div>
+
+    <script>
+        // WhatsApp Payment Notification
+        document.getElementById('whatsappSubmit').addEventListener('click', function(e) {
+            e.preventDefault();
+            const name = document.querySelector('#paymentForm input[type="text"]').value;
+            const phone = document.querySelector('#paymentForm input[type="tel"]').value;
+            const reference = document.querySelectorAll('#paymentForm input[type="text"]')[1].value;
+            
+            const whatsappUrl = `https://wa.me/27731575601?text=Payment%20Proof%20Submitted%0AName:%20${encodeURIComponent(name)}%0APhone:%20${encodeURIComponent(phone)}%0AReference:%20${encodeURIComponent(reference)}`;
+            
+            window.open(whatsappUrl, '_blank');
+            
+            alert("Please send your payment screenshot via the WhatsApp chat that opened.");
+        });
+    </script>
 </body>
 </html>
