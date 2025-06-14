@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PureCrunchEats - Healthy Smoothies & Snacks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">PureCrunchEats</div>
+        <p>Smoothies so good for you... you'll forget they're tasty</p>
+    </header>
+
+    <div class="container">
+        <img src="promo-banner.jpg" alt="Healthy Smoothie Promo" class="promo-banner">
+
+        <h2>Our Menu</h2>
+        <div class="menu">
+            <div class="menu-item">
+                <div class="item-name">STRAWBERRY BLUEBERRY SMOOTHIE</div>
+                <div class="item-ingredients">Greek yogurt, Milk, Frozen strawberries, Frozen blueberries</div>
+                <div class="price">R32</div>
+                <button class="add-to-cart" data-name="STRAWBERRY BLUEBERRY SMOOTHIE" data-price="32">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-name">APPLE SMOOTHIE</div>
+                <div class="item-ingredients">Apple, Greek yogurt, Milk, Cinnamon, Frozen banana</div>
+                <div class="price">R30</div>
+                <button class="add-to-cart" data-name="APPLE SMOOTHIE" data-price="30">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-name">STRAWBERRY COLLAGEN SMOOTHIE</div>
+                <div class="item-ingredients">Frozen strawberries, Banana, Almond milk</div>
+                <div class="price">R35</div>
+                <button class="add-to-cart" data-name="STRAWBERRY COLLAGEN SMOOTHIE" data-price="35">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-name">BLUEBERRY BANANA SMOOTHIE</div>
+                <div class="item-ingredients">Greek yogurt, Milk, Medjool date, Banana, Frozen blueberries</div>
+                <div class="price">R34</div>
+                <button class="add-to-cart" data-name="BLUEBERRY BANANA SMOOTHIE" data-price="34">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-name">BERRY SMOOTHIE</div>
+                <div class="item-ingredients">Frozen berries, Apple juice, Baby spinach, Chia seeds</div>
+                <div class="price">R36</div>
+                <button class="add-to-cart" data-name="BERRY SMOOTHIE" data-price="36">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-name">FRUIT SMOOTHIE</div>
+                <div class="item-ingredients">Mango, White grapes, Orange juice, Frozen strawberries, Frozen pineapple</div>
+                <div class="price">R38</div>
+                <button class="add-to-cart" data-name="FRUIT SMOOTHIE" data-price="38">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-name">1 WING</div>
+                <div class="item-ingredients">Crispy chicken wing</div>
+                <div class="price">R8</div>
+                <button class="add-to-cart" data-name="1 WING" data-price="8">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-name">4 WINGS</div>
+                <div class="item-ingredients">4 crispy chicken wings</div>
+                <div class="price">R32</div>
+                <button class="add-to-cart" data-name="4 WINGS" data-price="32">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-name">FRIES WITH SAUCES</div>
+                <div class="item-ingredients">Crispy fries with dipping sauces</div>
+                <div class="price">R13</div>
+                <button class="add-to-cart" data-name="FRIES WITH SAUCES" data-price="13">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="cart-section">
+            <h2>Your Order</h2>
+            <div class="cart-items" id="cart-items">
+                <p>Your cart is empty</p>
+            </div>
+            <div class="cart-total" id="cart-total">
+                Total: R0
+            </div>
+            <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+            
+            <div class="payment-info">
+                <h3>Payment Information</h3>
+                <p>We accept online payments via Capitec Pay.</p>
+                <p>For direct payments: <strong>0731575601 (Capitec)</strong></p>
+                <p>Please use your name as reference when making payment.</p>
+            </div>
+
+            <div class="payment-form" id="payment-form">
+                <h3>Payment Details</h3>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="payment-method">Payment Method</label>
+                    <select id="payment-method">
+                        <option value="capitec">Capitec Pay</option>
+                        <option value="eft">EFT/Bank Transfer</option>
+                        <option value="cash">Cash on Delivery</option>
+                    </select>
+                </div>
+                <button class="checkout-btn" id="confirm-payment-btn">Confirm Payment</button>
+            </div>
+
+            <div class="verification-section" id="verification-section">
+                <h3>Payment Verification</h3>
+                <div id="capitec-verify" style="display: none;">
+                    <p>Please make payment to Capitec 0731575601 and upload proof below:</p>
+                    <div class="form-group">
+                        <label for="proof">Upload Payment Proof</label>
+                        <input type="file" id="proof" accept="image/*,.pdf">
+                    </div>
+                    <div class="form-group">
+                        <label for="reference">Payment Reference</label>
+                        <input type="text" id="reference" required>
+                    </div>
+                    <button class="checkout-btn" id="verify-payment-btn">Verify Payment</button>
+                </div>
+                <div id="verification-message" style="display: none;">
+                    <p class="verification-success">Payment verified! Your order is being processed.</p>
+                    <p>We'll contact you shortly with delivery details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 PureCrunchEats. All rights reserved.</p>
+        <p>Healthy? Sure. Delicious? Absolutely. Guilt-free? ...Let's not lie.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
