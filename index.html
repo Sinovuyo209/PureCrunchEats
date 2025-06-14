@@ -3,70 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PureCrunchEats - Healthy Smoothies & Snacks</title>
-    <link rel="stylesheet" href="style.css">
+    <title>PureCrunchEats - Menu</title>
     <style>
-        /* Image styling */
-        .promo-banner {
-            width: 100%;
-            border-radius: 8px;
-            margin: 15px 0;
-            max-height: 300px;
-            object-fit: cover;
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        .menu-item img {
+        .menu-item {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .menu-img {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
             border-radius: 8px;
-            margin-bottom: 10px;
-            border: 2px solid #f5f5f5;
+            display: block; /* Ensures image appears */
+        }
+        .price {
+            color: #e91e63;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">PureCrunchEats</div>
-        <p>Smoothies so good for you... you'll forget they're tasty</p>
-        <!-- Promo Banner -->
-        <img src="promo-banner.jpg" alt="Weekly Specials" class="promo-banner">
-    </header>
-
-    <div class="container">
-        <h2>Our Menu</h2>
-        <div class="menu">
-            <!-- Smoothie Items -->
-            <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Strawberry Blueberry Smoothie">
-                <div class="item-name">STRAWBERRY BLUEBERRY SMOOTHIE</div>
-                <div class="item-ingredients">Greek yogurt, Milk, Frozen strawberries, Frozen blueberries</div>
-                <div class="price">R32</div>
-                <button class="add-to-cart" data-name="STRAWBERRY BLUEBERRY SMOOTHIE" data-price="32">Add to Cart</button>
-            </div>
-            
-            <!-- Wing Items -->
-            <div class="menu-item">
-                <img src="WingsB/Fries.jpg" alt="Crispy Chicken Wings">
-                <div class="item-name">4 WINGS</div>
-                <div class="item-ingredients">4 crispy chicken wings</div>
-                <div class="price">R32</div>
-                <button class="add-to-cart" data-name="4 WINGS" data-price="32">Add to Cart</button>
-            </div>
-            
-            <!-- Fries Item -->
-            <div class="menu-item">
-                <img src="WingsB/Fries.jpg" alt="Golden Fries with Sauces">
-                <div class="item-name">FRIES WITH SAUCES</div>
-                <div class="item-ingredients">Crispy fries with dipping sauces</div>
-                <div class="price">R13</div>
-                <button class="add-to-cart" data-name="FRIES WITH SAUCES" data-price="13">Add to Cart</button>
-            </div>
-        </div>
-
-        <!-- Rest of your existing cart and payment sections -->
-        <!-- ... -->
+    <h1>🍽️ PureCrunchEats Menu</h1>
+    
+    <!-- Smoothie Item -->
+    <div class="menu-item">
+        <img src="smoothie-menu.jpg" alt="Fresh Smoothies" class="menu-img">
+        <h2>STRAWBERRY SMOOTHIE</h2>
+        <p>Greek yogurt, Milk, Frozen strawberries</p>
+        <div class="price">R32</div>
+    </div>
+    
+    <!-- Wings & Fries Item -->
+    <div class="menu-item">
+        <img src="Wings&Fries.jpg" alt="Wings and Fries" class="menu-img">
+        <h2>WINGS & FRIES COMBO</h2>
+        <p>4 crispy wings with golden fries</p>
+        <div class="price">R45</div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Debugging Help (remove after images work) -->
+    <div style="margin-top: 40px; padding: 15px; background: #f8f8f8; border-radius: 8px;">
+        <h3>ℹ️ Image Check</h3>
+        <p>These links must work:</p>
+        <ul>
+            <li><a href="smoothie-menu.jpg" target="_blank">smoothie-menu.jpg</a></li>
+            <li><a href="Wings&Fries.jpg" target="_blank">Wings&Fries.jpg</a></li>
+        </ul>
+        <p>If they don't open, your images aren't uploaded correctly.</p>
+    </div>
 </body>
 </html>
