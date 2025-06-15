@@ -15,80 +15,83 @@
         </div>
         <div class="contact">
             <a href="tel:0731575601"><i class="fas fa-phone"></i> 073 157 5601</a>
-            <a href="https://wa.me/27731575601"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://wa.me/27731575601"><i class="fab fa-whatsapp"></i> Order Now</a>
         </div>
     </header>
 
     <div class="promo-banner">
         <img src="promo-banner.jpg" alt="Special Offers">
+        <div class="promo-text">
+            <h2>HEALTHY SMOOTHIES & CRISPY WINGS</h2>
+            <p>Order online now - Delivery available</p>
+        </div>
     </div>
 
     <div class="container">
         <div class="menu">
-            <h2><i class="fas fa-blender"></i> Smoothies</h2>
+            <h2><i class="fas fa-blender"></i> Smoothie Menu</h2>
             <div class="menu-items">
                 <!-- Smoothie Items -->
                 <div class="item">
-                    <img src="smoothie1.jpg" alt="Strawberry Blueberry Smoothie">
+                    <img src="smoothie-menu.jpg" alt="Strawberry Blueberry Smoothie" onerror="this.src='default-food.jpg'">
                     <div class="details">
                         <h3>STRAWBERRY BLUEBERRY</h3>
                         <p>Greek yogurt, Milk, Berries</p>
                         <div class="price">R32</div>
-                        <button class="add-to-cart" data-name="Strawberry Blueberry Smoothie" data-price="32">
+                        <button class="add-to-cart" data-name="Strawberry Blueberry Smoothie" data-price="32" data-prep="5">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
                 </div>
                 
                 <div class="item">
-                    <img src="smoothie2.jpg" alt="Apple Smoothie">
+                    <img src="smoothie2.jpg" alt="Apple Smoothie" onerror="this.src='default-food.jpg'">
                     <div class="details">
                         <h3>APPLE SMOOTHIE</h3>
                         <p>Apple, Greek yogurt, Cinnamon</p>
                         <div class="price">R30</div>
-                        <button class="add-to-cart" data-name="Apple Smoothie" data-price="30">
+                        <button class="add-to-cart" data-name="Apple Smoothie" data-price="30" data-prep="4">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
                 </div>
                 
-                <!-- More smoothie items... -->
+                <!-- 4 more smoothie items here -->
             </div>
 
             <h2><i class="fas fa-drumstick-bite"></i> Wings & Fries</h2>
             <div class="menu-items">
-                <!-- Wing Items -->
                 <div class="item">
-                    <img src="wing1.jpg" alt="1 Wing">
+                    <img src="Wings&Fries.jpg" alt="1 Wing" onerror="this.src='default-food.jpg'">
                     <div class="details">
                         <h3>1 WING</h3>
                         <p>Crispy chicken wing</p>
                         <div class="price">R8</div>
-                        <button class="add-to-cart" data-name="1 Wing" data-price="8">
+                        <button class="add-to-cart" data-name="1 Wing" data-price="8" data-prep="3">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
                 </div>
                 
                 <div class="item">
-                    <img src="wing4.jpg" alt="4 Wings">
+                    <img src="wing-combo.jpg" alt="4 Wings Combo" onerror="this.src='default-food.jpg'">
                     <div class="details">
                         <h3>4 WINGS COMBO</h3>
-                        <p>4 crispy wings + fries</p>
-                        <div class="price">R32</div>
-                        <button class="add-to-cart" data-name="4 Wings Combo" data-price="32">
+                        <p>4 wings + fries + sauce</p>
+                        <div class="price">R45</div>
+                        <button class="add-to-cart" data-name="4 Wings Combo" data-price="45" data-prep="8">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
                 </div>
                 
                 <div class="item">
-                    <img src="fries.jpg" alt="Fries">
+                    <img src="fries.jpg" alt="Fries" onerror="this.src='default-food.jpg'">
                     <div class="details">
                         <h3>FRIES WITH SAUCES</h3>
                         <p>Crispy fries with 3 dips</p>
-                        <div class="price">R13</div>
-                        <button class="add-to-cart" data-name="Fries with Sauces" data-price="13">
+                        <div class="price">R15</div>
+                        <button class="add-to-cart" data-name="Fries with Sauces" data-price="15" data-prep="4">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
@@ -115,76 +118,119 @@
                     <span id="total">R0.00</span>
                 </div>
             </div>
+            <div class="delivery-time">
+                <i class="fas fa-clock"></i> Estimated time: <span id="est-time">0-5 mins</span>
+            </div>
             <select id="delivery-option">
                 <option value="pickup">Pick Up (Free)</option>
-                <option value="delivery">Delivery (R3)</option>
+                <option value="delivery">Delivery (+R15)</option>
             </select>
             <button id="checkout-btn">Proceed to Payment</button>
         </div>
     </div>
 
+    <!-- Payment Modal -->
     <div class="payment-modal" id="payment-modal">
         <div class="modal-content">
+            <span class="close-modal">&times;</span>
             <h2><i class="fas fa-credit-card"></i> Complete Payment</h2>
             
-            <div class="payment-options">
-                <div class="payment-method active" data-method="capitec">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Capitec Pay</h3>
-                    <p>Pay to: 073 157 5601</p>
-                </div>
-                
-                <div class="payment-method" data-method="card">
-                    <i class="far fa-credit-card"></i>
-                    <h3>Card Payment</h3>
-                    <p>Secure online payment</p>
-                </div>
+            <div class="tabs">
+                <button class="tab active" data-tab="capitec">Capitec Pay</button>
+                <button class="tab" data-tab="card">Card Payment</button>
+                <button class="tab" data-tab="cash">Cash on Delivery</button>
             </div>
-            
-            <div class="payment-instructions" id="capitec-instructions">
-                <h3><i class="fas fa-info-circle"></i> Payment Details</h3>
-                <div class="detail">
-                    <span>Amount:</span>
-                    <strong id="payment-amount">R0.00</strong>
+
+            <!-- Capitec Pay Tab -->
+            <div class="tab-content active" id="capitec-tab">
+                <div class="instructions">
+                    <p>Send <strong id="payment-amount">R0.00</strong> to:</p>
+                    <div class="account-details">
+                        <p><i class="fas fa-mobile-alt"></i> <strong>073 157 5601</strong></p>
+                        <p>Account: <strong>2016489258</strong></p>
+                        <p>Reference: <strong id="order-ref">ORDER123</strong></p>
+                    </div>
+                    <p class="note">Use your name as reference</p>
                 </div>
-                <div class="detail">
-                    <span>Reference:</span>
-                    <strong id="order-ref">ORDER123</strong>
-                </div>
-                <div class="detail">
-                    <span>Account:</span>
-                    <strong>073 157 5601 (Capitec)</strong>
-                </div>
-                
-                <button class="confirm-payment" id="confirm-payment">
-                    <i class="fas fa-check"></i> I've Paid
-                </button>
-                
-                <a href="#" class="whatsapp-proof" id="whatsapp-proof">
+                <button class="whatsapp-btn" id="send-proof">
                     <i class="fab fa-whatsapp"></i> Send Payment Proof
-                </a>
+                </button>
+                <button class="verify-btn" id="verify-payment">
+                    <i class="fas fa-check-circle"></i> I've Paid
+                </button>
             </div>
-            
-            <div class="payment-instructions" id="card-instructions" style="display:none">
+
+            <!-- Card Payment Tab -->
+            <div class="tab-content" id="card-tab">
                 <div class="form-group">
                     <label>Card Number</label>
-                    <input type="text" placeholder="1234 5678 9012 3456">
+                    <input type="text" placeholder="1234 5678 9012 3456" id="card-number">
                 </div>
                 <div class="form-group">
                     <label>Expiry Date</label>
-                    <input type="text" placeholder="MM/YY">
+                    <input type="text" placeholder="MM/YY" id="expiry">
                 </div>
                 <div class="form-group">
                     <label>CVV</label>
-                    <input type="text" placeholder="123">
+                    <input type="password" placeholder="123" id="cvv">
                 </div>
-                <button class="pay-now">Pay Now</button>
+                <button class="pay-now-btn" id="pay-now">
+                    <i class="fas fa-lock"></i> Pay Securely
+                </button>
+            </div>
+
+            <!-- Cash on Delivery Tab -->
+            <div class="tab-content" id="cash-tab">
+                <div class="instructions">
+                    <p>Pay with cash when your order arrives</p>
+                    <p><strong>Exact amount required:</strong> <span id="cash-amount">R0.00</span></p>
+                    <p class="note">Driver will not carry change</p>
+                </div>
+                <button class="confirm-order" id="confirm-cash">
+                    <i class="fas fa-check"></i> Confirm Order
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- Order Confirmation -->
+    <div class="confirmation-modal" id="confirmation-modal">
+        <div class="confirmation-content">
+            <div class="confirmation-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Order Confirmed!</h2>
+            <p>Your order #<span id="order-number">12345</span> has been received</p>
+            <p><i class="fas fa-clock"></i> Estimated ready: <span id="ready-time">15-20 mins</span></p>
+            <div class="order-details" id="order-details">
+                <!-- Order items will be inserted here -->
+            </div>
+            <button class="close-confirmation" id="close-confirmation">
+                Close
+            </button>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2023 PureCrunchEats. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> 073 157 5601</p>
+                <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/27731575601">Chat on WhatsApp</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Payment Methods</h3>
+                <p><i class="fas fa-mobile-alt"></i> Capitec: 073 157 5601</p>
+                <p><i class="far fa-credit-card"></i> Card payments</p>
+                <p><i class="fas fa-money-bill-wave"></i> Cash on delivery</p>
+            </div>
+            <div class="footer-section">
+                <h3>Refund Policy</h3>
+                <p>Full refund if cancelled before preparation</p>
+                <p>50% refund after preparation starts</p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2023 PureCrunchEats. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
