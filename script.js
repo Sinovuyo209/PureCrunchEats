@@ -10,9 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const paymentModal = document.getElementById('payment-modal');
     const paymentAmountEl = document.getElementById('payment-amount');
     const orderRefEl = document.getElementById('order-ref');
-    const sendProofBtn = document.getElementById('send-proof');
-    const tabs = document.querySelectorAll('.tab');
-    const tabContents = document.querySelectorAll('.tab-content');
+    const paymentMethods = document.querySelectorAll('.payment-method');
+    const capitecInstructions = document.getElementById('capitec-instructions');
+    const cardInstructions = document.getElementById('card-instructions');
+    const confirmPaymentBtn = document.getElementById('confirm-payment');
+    const whatsappProof = document.getElementById('whatsapp-proof');
 
     // Add to cart
     document.querySelectorAll('.add-to-cart').forEach(button => {
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             updateCart();
+            animateAddToCart(this);
         });
     });
 
@@ -51,13 +54,25 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             cartItemsEl.innerHTML = '';
             cart.forEach(item => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'row';
-                cartItem.innerHTML = `
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                itemEl.innerHTML = `
                     <span>${item.name} x${item.quantity}</span>
                     <span>R${(item.price * item.quantity).toFixed(2)}</span>
+                    <button class="remove-item" data-name="${item.name}">
+                        <i class="fas fa-times"></i>
+                    </button>
                 `;
-                cartItemsEl.appendChild(cartItem);
+                cartItemsEl.appendChild(itemEl);
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemName = this.getAttribute('data-name');
+                    cart = cart.filter(item => item.name !== itemName);
+                    updateCart();
+                });
             });
             
             checkoutBtn.disabled = false;
@@ -77,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cart.length === 0) return;
         
         // Generate random order reference
-        const orderRef = 'PC' + Math.floor(Math.random() * 1000000);
+        const orderRef = 'PC' + Date.now().toString().slice(-6);
         
         // Update payment modal
         paymentAmountEl.textContent = totalEl.textContent;
@@ -87,19 +102,34 @@ document.addEventListener('DOMContentLoaded', function() {
         paymentModal.style.display = 'flex';
     });
 
-    // Payment tabs
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            tabs.forEach(t => t.classList.remove('active'));
-            tabContents.forEach(c => c.style.display = 'none');
-            
+    // Payment method selection
+    paymentMethods.forEach(method => {
+        method.addEventListener('click', function() {
+            paymentMethods.forEach(m => m.classList.remove('active'));
             this.classList.add('active');
-            document.getElementById(this.getAttribute('data-tab') + '-tab').style.display = 'block';
+            
+            if (this.dataset.method === 'capitec') {
+                capitecInstructions.style.display = 'block';
+                cardInstructions.style.display = 'none';
+            } else {
+                capitecInstructions.style.display = 'none';
+                cardInstructions.style.display = 'block';
+            }
         });
     });
 
+    // Confirm payment (Capitec)
+    confirmPaymentBtn.addEventListener('click', function() {
+        // In a real app, you would verify payment here
+        alert('Thank you! Your payment is being processed.');
+        paymentModal.style.display = 'none';
+        cart = [];
+        updateCart();
+    });
+
     // Send payment proof via WhatsApp
-    sendProofBtn.addEventListener('click', function() {
+    whatsappProof.addEventListener('click', function(e) {
+        e.preventDefault();
         const amount = paymentAmountEl.textContent;
         const ref = orderRefEl.textContent;
         
@@ -107,13 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = `Payment Proof for Order ${ref}%0AAmount: ${amount}%0AItems:%0A${items}`;
         
         window.open(`https://wa.me/27731575601?text=${message}`, '_blank');
-        
-        // Close modal and clear cart
-        paymentModal.style.display = 'none';
-        cart = [];
-        updateCart();
-        
-        alert('Thank you! Your order has been received. We will contact you soon.');
     });
 
     // Close modal when clicking outside
@@ -123,6 +146,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initialize
+    // Animation for add to cart
+    function animateAddToCart(button) {
+        button.classList.add('pulse');
+        setTimeout(() => button.classList.remove('pulse'), 300);
+    }
+
+    // Initialize cart
     updateCart();
 });
