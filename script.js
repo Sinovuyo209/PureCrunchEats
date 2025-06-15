@@ -1,16 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Cart and Order Management
     let cart = [];
-    
-    // Add to cart functionality
+    const cartItemsEl = document.getElementById('cart-items');
+    const subtotalEl = document.getElementById('subtotal');
+    const deliveryFeeEl = document.getElementById('delivery-fee');
+    const grandTotalEl = document.getElementById('grand-total');
+    const deliveryMethod = document.getElementById('delivery-method');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const paymentModal = document.getElementById('payment-modal');
+    const paymentAmountEl = document.getElementById('payment-amount');
+    const paymentReferenceEl = document.getElementById('payment-reference');
+    const readyTimeEl = document.getElementById('ready-time');
+    const sendProofBtn = document.getElementById('send-proof');
+
+    // Add to Cart Functionality
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', function() {
             const name = this.getAttribute('data-name');
             const price = parseFloat(this.getAttribute('data-price'));
             
-            // Check if item already in cart
+            // Check if item exists in cart
             const existingItem = cart.find(item => item.name === name);
+            
             if (existingItem) {
-                existingItem.quantity += 1;
+                existingItem.quantity++;
             } else {
                 cart.push({
                     name: name,
@@ -22,107 +35,103 @@ document.addEventListener('DOMContentLoaded', function() {
             updateCart();
         });
     });
-    
-    // Update cart display
+
+    // Update Cart Display
     function updateCart() {
-        const cartItemsElement = document.getElementById('cart-items');
-        const cartTotalElement = document.getElementById('cart-total');
+        // Calculate totals
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const deliveryFee = deliveryMethod.value === 'delivery' ? 3 : 0; // R3 delivery fee
+        const total = subtotal + deliveryFee;
         
+        // Update DOM
         if (cart.length === 0) {
-            cartItemsElement.innerHTML = '<p>Your cart is empty</p>';
-            cartTotalElement.textContent = 'Total: R0';
-            return;
-        }
-        
-        let cartHTML = '';
-        let total = 0;
-        
-        cart.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-            
-            cartHTML += `
-                <div class="cart-item">
-                    <div style="display: flex; justify-content: space-between;">
-                        <span>${item.name} x${item.quantity}</span>
-                        <span>R${itemTotal.toFixed(2)}</span>
-                    </div>
-                </div>
-            `;
-        });
-        
-        cartItemsElement.innerHTML = cartHTML;
-        cartTotalElement.textContent = `Total: R${total.toFixed(2)}`;
-    }
-    
-    // Checkout button
-    document.getElementById('checkout-btn').addEventListener('click', function() {
-        if (cart.length === 0) {
-            alert('Your cart is empty!');
-            return;
-        }
-        
-        document.getElementById('payment-form').style.display = 'block';
-        this.style.display = 'none';
-    });
-    
-    // Confirm payment button
-    document.getElementById('confirm-payment-btn').addEventListener('click', function() {
-        const name = document.getElementById('name').value;
-        const phone = document.getElementById('phone').value;
-        const email = document.getElementById('email').value;
-        const paymentMethod = document.getElementById('payment-method').value;
-        
-        if (!name || !phone || !email) {
-            alert('Please fill in all required fields');
-            return;
-        }
-        
-        document.getElementById('payment-form').style.display = 'none';
-        
-        if (paymentMethod === 'capitec' || paymentMethod === 'eft') {
-            document.getElementById('verification-section').style.display = 'block';
-            document.getElementById('capitec-verify').style.display = 'block';
+            cartItemsEl.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+            checkoutBtn.disabled = true;
         } else {
-            // Cash on delivery
-            document.getElementById('verification-section').style.display = 'block';
-            document.getElementById('verification-message').style.display = 'block';
-            completeOrder();
+            cartItemsEl.innerHTML = '';
+            cart.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                itemEl.innerHTML = `
+                    <div class="item-info">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-quantity">x${item.quantity}</span>
+                    </div>
+                    <div class="item-price">
+                        R${(item.price * item.quantity).toFixed(2)}
+                        <button class="remove-item" data-name="${item.name}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                cartItemsEl.appendChild(itemEl);
+            });
+            
+            checkoutBtn.disabled = false;
         }
-    });
-    
-    // Verify payment button
-    document.getElementById('verify-payment-btn').addEventListener('click', function() {
-        const reference = document.getElementById('reference').value;
         
-        if (!reference) {
-            alert('Please enter your payment reference');
-            return;
-        }
+        // Update totals
+        subtotalEl.textContent = `R${subtotal.toFixed(2)}`;
+        deliveryFeeEl.textContent = deliveryFee > 0 ? `R${deliveryFee.toFixed(2)}` : 'FREE';
+        grandTotalEl.textContent = `R${total.toFixed(2)}`;
         
-        // In a real implementation, you would verify with your backend
-        document.getElementById('capitec-verify').style.display = 'none';
-        document.getElementById('verification-message').style.display = 'block';
-        completeOrder();
-    });
-    
-    function completeOrder() {
-        let orderDetails = 'Order Details:\n\n';
-        let total = 0;
-        
-        cart.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-            orderDetails += `${item.name} x${item.quantity} - R${itemTotal.toFixed(2)}\n`;
+        // Add event listeners to remove buttons
+        document.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', function() {
+                const itemName = this.getAttribute('data-name');
+                cart = cart.filter(item => item.name !== itemName);
+                updateCart();
+            });
         });
+    }
+
+    // Delivery Method Change
+    deliveryMethod.addEventListener('change', updateCart);
+
+    // Checkout Process
+    checkoutBtn.addEventListener('click', function() {
+        if (cart.length === 0) return;
         
-        orderDetails += `\nTotal: R${total.toFixed(2)}\n\n`;
-        orderDetails += `Thank you for your order!`;
+        // Calculate preparation time (5 mins per item + 10 mins if delivery)
+        let prepTime = cart.reduce((sum, item) => sum + (item.quantity * 5), 0);
+        if (deliveryMethod.value === 'delivery') prepTime += 10;
         
-        console.log(orderDetails); // In real app, send to server
+        // Set payment details
+        paymentAmountEl.textContent = grandTotalEl.textContent;
+        paymentReferenceEl.textContent = `ORDER${Date.now().toString().slice(-6)}`;
+        readyTimeEl.textContent = `${prepTime} minutes`;
         
-        // Reset cart
+        // Show payment modal
+        paymentModal.style.display = 'flex';
+    });
+
+    // Send Payment Proof via WhatsApp
+    sendProofBtn.addEventListener('click', function() {
+        const orderRef = paymentReferenceEl.textContent;
+        const amount = paymentAmountEl.textContent;
+        const items = cart.map(item => `${item.name} x${item.quantity}`).join('%0A');
+        
+        const whatsappUrl = `https://wa.me/27731575601?text=Payment%20Proof%20for%20Order%20${orderRef}%0AAmount:%20${amount}%0AItems:%0A${items}`;
+        window.open(whatsappUrl, '_blank');
+        
+        // Close modal after sending
+        paymentModal.style.display = 'none';
+        
+        // Clear cart
         cart = [];
         updateCart();
-    }
+        
+        // Show confirmation
+        alert('Order received! We\'ll prepare your items and contact you soon.');
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === paymentModal) {
+            paymentModal.style.display = 'none';
+        }
+    });
+
+    // Initialize cart
+    updateCart();
 });
