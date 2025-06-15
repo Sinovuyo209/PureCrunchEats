@@ -3,14 +3,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const deliveryFee = 3;
     const ownerPhone = '0731575601';
     
-    // Toggle address field
-    document.getElementById('delivery-type').addEventListener('change', function() {
-        document.getElementById('address-group').style.display = 
-            this.value === 'delivery' ? 'block' : 'none';
-        updateCartTotal();
+    // Toggle address field based on delivery option
+    document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('address-group').style.display = 
+                this.value === 'delivery' ? 'block' : 'none';
+        });
     });
-
-    // Add to cart
+    
+    // Add to cart functionality
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', function() {
             const name = this.getAttribute('data-name');
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateCart();
         });
     });
-
+    
     // Update cart display
     function updateCart() {
         const cartItems = document.getElementById('cart-items');
@@ -47,14 +48,22 @@ document.addEventListener('DOMContentLoaded', function() {
             
             html += `
                 <div class="cart-item">
-                    <span>${item.name} x${item.quantity}</span>
+                    <div>
+                        <span>${item.name}</span>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus" data-index="${index}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="quantity-btn plus" data-index="${index}">+</button>
+                            <button class="remove-item" data-index="${index}">&times;</button>
+                        </div>
+                    </div>
                     <span>R${itemTotal.toFixed(2)}</span>
                 </div>
             `;
         });
         
         // Add delivery fee if needed
-        const deliveryType = document.getElementById('delivery-type').value;
+        const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
         const total = deliveryType === 'delivery' ? subtotal + deliveryFee : subtotal;
         
         if (deliveryType === 'delivery') {
@@ -68,9 +77,35 @@ document.addEventListener('DOMContentLoaded', function() {
         
         cartItems.innerHTML = html;
         cartTotal.textContent = `Total: R${total.toFixed(2)}`;
-        document.getElementById('payment-amount').textContent = `R${total.toFixed(2)}`;
+        
+        // Add event listeners to quantity buttons
+        document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity--;
+                    updateCart();
+                }
+            });
+        });
+        
+        document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                cart[index].quantity++;
+                updateCart();
+            });
+        });
+        
+        document.querySelectorAll('.remove-item').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                cart.splice(index, 1);
+                updateCart();
+            });
+        });
     }
-
+    
     // Checkout button
     document.getElementById('checkout-btn').addEventListener('click', function() {
         if (cart.length === 0) {
@@ -80,92 +115,69 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('payment-form').style.display = 'block';
         this.style.display = 'none';
     });
-
+    
     // Process payment
-    document.getElementById('confirm-payment-btn').addEventListener('click', function() {
+    document.getElementById('process-payment').addEventListener('click', function() {
         const name = document.getElementById('name').value.trim();
         const phone = document.getElementById('phone').value.trim();
-        const bankDetails = document.getElementById('bank-details').value.trim();
-        const deliveryType = document.getElementById('delivery-type').value;
+        const bankName = document.getElementById('bank-name').value.trim();
+        const accountNumber = document.getElementById('account-number').value.trim();
+        const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+        const address = deliveryType === 'delivery' ? document.getElementById('address').value.trim() : '';
         
-        if (!name || !phone || !bankDetails) {
+        if (!name || !phone || !bankName || !accountNumber || (deliveryType === 'delivery' && !address)) {
             alert('Please fill in all required fields');
             return;
         }
         
         // Show processing animation
-        document.getElementById('payment-form').style.display = 'none';
-        document.getElementById('verification-section').style.display = 'block';
-        document.getElementById('display-bank-name').textContent = bankDetails.split(',')[0];
-        document.getElementById('display-account-number').textContent = bankDetails.split(',')[1] || '';
+        document.querySelector('.payment-processing').style.display = 'block';
         
-        // Simulate payment processing
+        // Simulate payment processing (2 seconds)
         setTimeout(() => {
             document.querySelector('.payment-processing').style.display = 'none';
             document.querySelector('.payment-success').style.display = 'block';
             
-            // Complete order after 1.5 seconds
-            setTimeout(completeOrder, 1500, name, phone, deliveryType);
+            // Calculate total
+            let subtotal = 0;
+            cart.forEach(item => subtotal += item.price * item.quantity);
+            const total = deliveryType === 'delivery' ? subtotal + deliveryFee : subtotal;
+            
+            // Create order summary
+            let orderSummary = `New Order from ${name} (${phone}):\n\n`;
+            cart.forEach(item => {
+                orderSummary += `${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
+            });
+            
+            orderSummary += `\nSubtotal: R${subtotal.toFixed(2)}\n`;
+            if (deliveryType === 'delivery') {
+                orderSummary += `Delivery Fee: R${deliveryFee.toFixed(2)}\n`;
+            }
+            orderSummary += `Total: R${total.toFixed(2)}\n\n`;
+            orderSummary += `Payment Method: Bank Transfer\n`;
+            orderSummary += `Bank: ${bankName}\n`;
+            orderSummary += `Account: ${accountNumber}\n\n`;
+            orderSummary += `${deliveryType === 'delivery' ? 'Delivery to: ' + address : 'For collection'}`;
+            
+            // Display order summary
+            document.getElementById('order-summary').innerHTML = orderSummary.replace(/\n/g, '<br>');
+            
+            // Simulate WhatsApp notification to owner
+            console.log(`Sending to ${ownerPhone}:\n${orderSummary}`);
+            
+            // Clear cart
+            cart.length = 0;
+            updateCart();
         }, 2000);
     });
-
-    function completeOrder(name, phone, deliveryType) {
-        // Calculate total
-        let subtotal = 0;
-        cart.forEach(item => subtotal += item.price * item.quantity);
-        const total = deliveryType === 'delivery' ? subtotal + deliveryFee : subtotal;
-        
-        // Create order summary
-        let summary = `
-            <h3>Order Summary</h3>
-            <p><strong>Customer:</strong> ${name}</p>
-            <p><strong>Phone:</strong> ${phone}</p>
-            <p><strong>Type:</strong> ${deliveryType === 'delivery' ? 'Delivery' : 'Collection'}</p>
-            
-            <h4>Items:</h4>
-        `;
-        
-        cart.forEach(item => {
-            summary += `<p>${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}</p>`;
-        });
-        
-        summary += `
-            <p><strong>Subtotal:</strong> R${subtotal.toFixed(2)}</p>
-            ${deliveryType === 'delivery' ? `<p><strong>Delivery Fee:</strong> R${deliveryFee.toFixed(2)}</p>` : ''}
-            <p><strong>Total:</strong> R${total.toFixed(2)}</p>
-            <p><strong>Payment Method:</strong> Instant Bank Transfer</p>
-            <p><i class="fas fa-check"></i> Payment received in your Capitec account</p>
-        `;
-        
-        // Show confirmation
-        document.getElementById('verification-message').style.display = 'block';
-        document.getElementById('order-summary').innerHTML = summary;
-        
-        // Simulate WhatsApp notification
-        const whatsappMsg = `NEW ORDER from ${name} (${phone}):
-${cart.map(item => `${item.name} x${item.quantity}`).join('\n')}
-
-Total: R${total.toFixed(2)}
-${deliveryType === 'delivery' ? 'Delivery to: ' + document.getElementById('address').value : 'For collection'}`;
-        
-        console.log(`Sending to ${ownerPhone}: ${whatsappMsg}`);
-        
-        // Clear cart
-        cart.length = 0;
-    }
-
-    // New order button
-    document.getElementById('new-order-btn').addEventListener('click', function() {
-        document.getElementById('verification-section').style.display = 'none';
-        document.getElementById('checkout-btn').style.display = 'block';
-        document.getElementById('payment-form').reset();
-    });
-
+    
     // Cancel order button
-    document.getElementById('cancel-order-btn').addEventListener('click', function() {
-        if (confirm('Cancel this order?')) {
+    document.getElementById('cancel-order').addEventListener('click', function() {
+        if (confirm('Are you sure you want to cancel this order?')) {
             document.getElementById('payment-form').style.display = 'none';
             document.getElementById('checkout-btn').style.display = 'block';
+            document.querySelector('.payment-processing').style.display = 'none';
+            document.querySelector('.payment-success').style.display = 'none';
         }
     });
 });
