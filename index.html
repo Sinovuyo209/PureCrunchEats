@@ -3,194 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PureCrunchEats - Order Online</title>
+    <title>PureCrunchEats - Healthy Smoothies & Snacks</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Stripe Payment Integration -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="logo.png" alt="PureCrunchEats Logo">
-            <h1>PureCrunchEats</h1>
-        </div>
-        <div class="contact">
-            <a href="tel:0731575601"><i class="fas fa-phone"></i> 073 157 5601</a>
-            <a href="https://wa.me/27731575601"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        </div>
+        <div class="logo">PureCrunchEats</div>
+        <p>Smoothies so good for you... you'll forget they're tasty</p>
     </header>
 
-    <!-- Promo Banner -->
-    <div class="promo-banner">
-        <img src="promo-banner.jpg" alt="Weekly Specials">
-        <div class="promo-text">
-            <h2>HEALTHY SMOOTHIES & CRISPY WINGS</h2>
-            <p>Order Online - Delivery Available</p>
-        </div>
-    </div>
-
     <div class="container">
-        <!-- Menu Sections -->
-        <div class="menu-sections">
-            <section class="menu-section">
-                <h2><i class="fas fa-blender"></i> Smoothies</h2>
-                <div class="menu-grid">
-                    <!-- 6 Smoothie Items -->
-                    <div class="menu-item">
-                        <img src="smoothie1.jpg" alt="Strawberry Smoothie">
-                        <div class="item-details">
-                            <h3>STRAWBERRY BLUEBERRY</h3>
-                            <p>Greek yogurt, Milk, Berries</p>
-                            <div class="price">R32</div>
-                            <button class="add-to-cart" data-name="Strawberry Smoothie" data-price="32" data-prep="5">
-                                <i class="fas fa-plus"></i> Add
-                            </button>
-                        </div>
-                    </div>
-                    <!-- More smoothie items... -->
-                </div>
-            </section>
+        <img src="promo-banner.jpg" alt="Healthy Smoothie Promo" class="promo-banner">
 
-            <section class="menu-section">
-                <h2><i class="fas fa-drumstick-bite"></i> Wings & Fries</h2>
-                <div class="menu-grid">
-                    <div class="menu-item">
-                        <img src="wings-fries.jpg" alt="1 Wing">
-                        <div class="item-details">
-                            <h3>1 WING</h3>
-                            <p>Crispy chicken wing</p>
-                            <div class="price">R8</div>
-                            <button class="add-to-cart" data-name="1 Wing" data-price="8" data-prep="3">
-                                <i class="fas fa-plus"></i> Add
-                            </button>
-                        </div>
-                    </div>
-                    <!-- More wing items... -->
-                </div>
-            </section>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="order-summary">
-            <h2><i class="fas fa-shopping-cart"></i> Your Order</h2>
-            <div class="cart-items" id="cart-items">
-                <p class="empty">Your cart is empty</p>
+        <h2>Our Menu</h2>
+        <div class="menu">
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Strawberry Blueberry Smoothie" class="menu-image">
+                <div class="item-name">STRAWBERRY BLUEBERRY SMOOTHIE</div>
+                <div class="item-ingredients">Greek yogurt, Milk, Frozen strawberries, Frozen blueberries</div>
+                <div class="price">R32</div>
+                <button class="add-to-cart" data-name="STRAWBERRY BLUEBERRY SMOOTHIE" data-price="32">Add to Cart</button>
             </div>
-            <div class="order-totals">
-                <div class="total-row">
-                    <span>Subtotal:</span>
-                    <span id="subtotal">R0.00</span>
-                </div>
-                <div class="total-row">
-                    <span>Delivery:</span>
-                    <span id="delivery-fee">R0.00</span>
-                </div>
-                <div class="total-row grand-total">
-                    <span>Total:</span>
-                    <span id="total">R0.00</span>
-                </div>
-            </div>
-            <div class="delivery-time">
-                <i class="fas fa-clock"></i> Ready in: <span id="est-time">0-5 mins</span>
-            </div>
-            <select id="delivery-method">
-                <option value="pickup">Pick Up (Free)</option>
-                <option value="delivery">Delivery (+R3)</option>
-            </select>
-            <button id="checkout-btn">Proceed to Payment</button>
-        </div>
-    </div>
-
-    <!-- Payment Modal -->
-    <div class="payment-modal" id="payment-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2><i class="fas fa-credit-card"></i> Complete Payment</h2>
             
-            <div class="payment-tabs">
-                <button class="tab active" data-tab="card">Card Payment</button>
-                <button class="tab" data-tab="capitec">Capitec Pay</button>
-                <button class="tab" data-tab="cash">Cash</button>
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Apple Smoothie" class="menu-image">
+                <div class="item-name">APPLE SMOOTHIE</div>
+                <div class="item-ingredients">Apple, Greek yogurt, Milk, Cinnamon, Frozen banana</div>
+                <div class="price">R30</div>
+                <button class="add-to-cart" data-name="APPLE SMOOTHIE" data-price="30">Add to Cart</button>
             </div>
-
-            <!-- Card Payment -->
-            <div class="tab-content active" id="card-tab">
-                <div id="card-element"></div>
-                <button id="card-submit" class="payment-btn">
-                    <i class="fas fa-lock"></i> Pay R<span id="card-amount">0.00</span>
-                </button>
-                <div id="card-errors" role="alert"></div>
+            
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Strawberry Collagen Smoothie" class="menu-image">
+                <div class="item-name">STRAWBERRY COLLAGEN SMOOTHIE</div>
+                <div class="item-ingredients">Frozen strawberries, Banana, Almond milk</div>
+                <div class="price">R35</div>
+                <button class="add-to-cart" data-name="STRAWBERRY COLLAGEN SMOOTHIE" data-price="35">Add to Cart</button>
             </div>
-
-            <!-- Capitec Pay -->
-            <div class="tab-content" id="capitec-tab">
-                <div class="payment-instructions">
-                    <p>Send <strong id="capitec-amount">R0.00</strong> to:</p>
-                    <div class="account-details">
-                        <p><i class="fas fa-mobile-alt"></i> <strong>073 157 5601</strong></p>
-                        <p>Account: <strong>2016489258</strong></p>
-                        <p>Reference: <strong id="capitec-ref">ORDER123</strong></p>
-                    </div>
-                </div>
-                <button id="confirm-capitec" class="payment-btn">
-                    <i class="fas fa-check-circle"></i> I've Paid
-                </button>
-                <a href="#" id="whatsapp-proof" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Send Payment Proof
-                </a>
+            
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Blueberry Banana Smoothie" class="menu-image">
+                <div class="item-name">BLUEBERRY BANANA SMOOTHIE</div>
+                <div class="item-ingredients">Greek yogurt, Milk, Medjool date, Banana, Frozen blueberries</div>
+                <div class="price">R34</div>
+                <button class="add-to-cart" data-name="BLUEBERRY BANANA SMOOTHIE" data-price="34">Add to Cart</button>
             </div>
-
-            <!-- Cash -->
-            <div class="tab-content" id="cash-tab">
-                <div class="payment-instructions">
-                    <p>Pay with cash when your order arrives</p>
-                    <p><strong>Amount Due:</strong> R<span id="cash-amount">0.00</span></p>
-                    <p class="note">Please prepare exact amount</p>
-                </div>
-                <button id="confirm-cash" class="payment-btn">
-                    <i class="fas fa-check"></i> Confirm Order
-                </button>
+            
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Berry Smoothie" class="menu-image">
+                <div class="item-name">BERRY SMOOTHIE</div>
+                <div class="item-ingredients">Frozen berries, Apple juice, Baby spinach, Chia seeds</div>
+                <div class="price">R36</div>
+                <button class="add-to-cart" data-name="BERRY SMOOTHIE" data-price="36">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Fruit Smoothie" class="menu-image">
+                <div class="item-name">FRUIT SMOOTHIE</div>
+                <div class="item-ingredients">Mango, White grapes, Orange juice, Frozen strawberries, Frozen pineapple</div>
+                <div class="price">R38</div>
+                <button class="add-to-cart" data-name="FRUIT SMOOTHIE" data-price="38">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <img src="wing-fries.jpg" alt="Chicken Wings" class="menu-image">
+                <div class="item-name">1 WING</div>
+                <div class="item-ingredients">Crispy chicken wing</div>
+                <div class="price">R8</div>
+                <button class="add-to-cart" data-name="1 WING" data-price="8">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <img src="wing-fries.jpg" alt="4 Chicken Wings" class="menu-image">
+                <div class="item-name">4 WINGS</div>
+                <div class="item-ingredients">4 crispy chicken wings</div>
+                <div class="price">R32</div>
+                <button class="add-to-cart" data-name="4 WINGS" data-price="32">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <img src="wing-fries.jpg" alt="Fries with Sauces" class="menu-image">
+                <div class="item-name">FRIES WITH SAUCES</div>
+                <div class="item-ingredients">Crispy fries with dipping sauces</div>
+                <div class="price">R13</div>
+                <button class="add-to-cart" data-name="FRIES WITH SAUCES" data-price="13">Add to Cart</button>
             </div>
         </div>
-    </div>
 
-    <!-- Order Confirmation -->
-    <div class="confirmation-modal" id="confirmation-modal">
-        <div class="confirmation-content">
-            <div class="confirmation-icon">
-                <i class="fas fa-check-circle"></i>
+        <div class="cart-section">
+            <h2>Your Order</h2>
+            <div class="cart-items" id="cart-items">
+                <p>Your cart is empty</p>
             </div>
-            <h2>Order Confirmed!</h2>
-            <p>Your order #<span id="order-number">12345</span></p>
-            <p><i class="fas fa-clock"></i> Ready by: <span id="ready-time">15:30</span></p>
-            <div class="order-details" id="order-details"></div>
-            <button id="close-confirmation" class="close-btn">Done</button>
-            <button id="cancel-order" class="cancel-btn">
-                <i class="fas fa-times"></i> Cancel Order
-            </button>
+            <div class="cart-total" id="cart-total">
+                Total: R0
+            </div>
+            <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+            
+            <div class="payment-info">
+                <h3>Payment Information</h3>
+                <p>We accept online payments via different bank accounts or direct EFT to our Capitec account.</p>
+                <p>For direct payments: <strong>Capitec Bank</strong></p>
+                <p>Account Number: <strong>2016489258</strong></p>
+                <p>Branch Code: <strong>470010</strong></p>
+                <p>Reference: Please use your name as reference</p>
+                <p>Delivery fee: <strong>R3</strong> (included in total)</p>
+            </div>
+
+            <div class="payment-form" id="payment-form">
+                <h3>Order & Payment Details</h3>
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Delivery Address *</label>
+                    <textarea id="address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="payment-method">Payment Method *</label>
+                    <select id="payment-method">
+                        <option value="capitec">Capitec Pay</option>
+                        <option value="eft">EFT/Bank Transfer</option>
+                        <option value="other">Other Bank Payment</option>
+                        <option value="cash">Cash on Delivery</option>
+                    </select>
+                </div>
+                <div class="form-group" id="bank-details-group" style="display: none;">
+                    <label for="bank-details">Your Bank Details (for refunds if needed)</label>
+                    <input type="text" id="bank-details" placeholder="Bank name, account number">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="terms" required> I agree to the terms and conditions *
+                    </label>
+                </div>
+                <button class="checkout-btn" id="confirm-payment-btn">Place Order</button>
+                <button class="cancel-btn" id="cancel-order-btn">Cancel Order</button>
+            </div>
+
+            <div class="verification-section" id="verification-section">
+                <h3>Payment Verification</h3>
+                <div id="bank-verify" style="display: none;">
+                    <p>Please make payment to:</p>
+                    <div class="bank-info">
+                        <p><strong>Bank:</strong> Capitec</p>
+                        <p><strong>Account Number:</strong> 2016489258</p>
+                        <p><strong>Branch Code:</strong> 470010</p>
+                        <p><strong>Amount:</strong> <span id="payment-amount"></span></p>
+                        <p><strong>Reference:</strong> Your name</p>
+                    </div>
+                    <p>Or pay instantly with your bank details:</p>
+                    <div class="instant-payment">
+                        <button id="instant-payment-btn"><i class="fas fa-bolt"></i> Pay Now Securely</button>
+                    </div>
+                    <p>Upload proof of payment below:</p>
+                    <div class="form-group">
+                        <label for="proof">Payment Proof (screenshot/PDF) *</label>
+                        <input type="file" id="proof" accept="image/*,.pdf" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reference">Payment Reference *</label>
+                        <input type="text" id="reference" required placeholder="e.g., EFT123456">
+                    </div>
+                    <button class="checkout-btn" id="verify-payment-btn">Verify Payment</button>
+                </div>
+                <div id="verification-message" style="display: none;">
+                    <p class="verification-success"><i class="fas fa-check-circle"></i> Order confirmed! Thank you for your payment.</p>
+                    <p>Your order will be ready for collection in approximately <strong>30 minutes</strong>.</p>
+                    <p>We've sent the order details to your WhatsApp and email.</p>
+                    <div class="order-summary" id="order-summary"></div>
+                    <button class="checkout-btn" id="new-order-btn">Start New Order</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Contact</h3>
+                <h3>Contact Us</h3>
                 <p><i class="fas fa-phone"></i> 073 157 5601</p>
-                <p><i class="fab fa-whatsapp"></i> WhatsApp</p>
+                <p><i class="fas fa-envelope"></i> info@purecrunch.com</p>
             </div>
             <div class="footer-section">
-                <h3>Payment</h3>
-                <p><i class="fas fa-mobile-alt"></i> Capitec Pay</p>
-                <p><i class="far fa-credit-card"></i> Card Payments</p>
+                <h3>Hours</h3>
+                <p>Monday - Friday: 9am - 8pm</p>
+                <p>Saturday - Sunday: 10am - 6pm</p>
             </div>
             <div class="footer-section">
-                <h3>Refunds</h3>
-                <p>Full refund if cancelled before preparation</p>
-                <p>50% refund after preparation starts</p>
+                <h3>Banking Details</h3>
+                <p>Capitec Bank</p>
+                <p>Acc: 2016489258</p>
+                <p>Branch: 470010</p>
             </div>
         </div>
-        <p class="copyright">&copy; 2023 PureCrunchEats</p>
+        <div class="footer-bottom">
+            <p>&copy; 2023 PureCrunchEats. All rights reserved.</p>
+            <p>Healthy? Sure. Delicious? Absolutely. Guilt-free? ...Let's not lie.</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>
