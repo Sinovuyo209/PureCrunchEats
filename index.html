@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PureCrunchEats - Order & Pay</title>
+    <title>PureCrunchEats - Order Online</title>
     <style>
         body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
         .menu-item { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
         .menu-item img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
         button { background: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
         #cart { background: #f9f9f9; padding: 20px; margin-top: 30px; border-radius: 8px; }
-        #payment-form { display: none; margin-top: 20px; }
-        input, textarea, select { 
-            width: 100%; padding: 10px; margin: 8px 0 15px; 
-            box-sizing: border-box; border: 1px solid #ddd; border-radius: 4px; 
-        }
+        #payment-form, #delivery-form { display: none; margin-top: 20px; }
+        input, textarea, select { width: 100%; padding: 10px; margin: 8px 0 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .form-row { display: flex; gap: 10px; }
+        .payment-option { margin: 15px 0; }
+        [type="radio"] { width: auto; margin-right: 10px; }
         .promo-banner { width: 100%; border-radius: 8px; margin: 20px 0; }
         h1 { color: #e74c3c; text-align: center; }
         h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 5px; }
         .menu-category { margin-top: 30px; }
-        .form-row { display: flex; gap: 15px; }
-        .form-row > div { flex: 1; }
-        .processing { background: #27ae60 !important; }
     </style>
 </head>
 <body>
@@ -55,6 +52,20 @@
                 <h3>GREEN ENERGY - R34.00</h3>
                 <p>Spinach, kale, apple, banana, ginger</p>
                 <button class="add-to-cart" data-name="GREEN ENERGY" data-price="34">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Chocolate Dream">
+                <h3>CHOCOLATE DREAM - R38.00</h3>
+                <p>Cocoa, banana, peanut butter, almond milk</p>
+                <button class="add-to-cart" data-name="CHOCOLATE DREAM" data-price="38">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Vanilla Berry">
+                <h3>VANILLA BERRY - R33.00</h3>
+                <p>Mixed berries, vanilla yogurt, honey</p>
+                <button class="add-to-cart" data-name="VANILLA BERRY" data-price="33">Add to Cart</button>
             </div>
         </div>
     </div>
@@ -92,64 +103,74 @@
         <button id="checkout-btn">Checkout</button>
     </div>
 
+    <div id="payment-options" style="display:none;">
+        <h2>Payment Method</h2>
+        <div class="payment-option">
+            <input type="radio" name="payment" id="pay-card" checked>
+            <label for="pay-card">Pay Now with Card</label>
+        </div>
+        <div class="payment-option">
+            <input type="radio" name="payment" id="pay-delivery">
+            <label for="pay-delivery">Pay Cash on Delivery (+R3 fee)</label>
+        </div>
+        <button id="confirm-payment-method">Continue</button>
+    </div>
+
     <div id="payment-form">
-        <h2>Complete Order</h2>
-        <input type="text" id="name" placeholder="Full Name" required>
-        <input type="tel" id="phone" placeholder="Phone Number" required>
-        
-        <div>
-            <input type="radio" name="delivery" id="collection" checked>
-            <label for="collection">Collection</label>
-            <input type="radio" name="delivery" id="delivery">
-            <label for="delivery">Delivery (+R3)</label>
-        </div>
-        
-        <textarea id="address" placeholder="Delivery Address" style="display:none;"></textarea>
-        
-        <h3>Payment Details</h3>
-        <select id="card-type" required>
-            <option value="">Select Card Type</option>
-            <option value="visa">Visa</option>
-            <option value="mastercard">Mastercard</option>
-            <option value="amex">American Express</option>
-        </select>
-        
-        <input type="text" id="card-number" placeholder="Card Number (16 digits)" required maxlength="16">
-        
+        <h2>Card Payment</h2>
+        <input type="text" id="card-number" placeholder="Card Number (16 digits)" maxlength="16" required>
         <div class="form-row">
-            <div>
-                <input type="text" id="expiry" placeholder="MM/YY" required maxlength="5">
-            </div>
-            <div>
-                <input type="text" id="cvv" placeholder="CVV" required maxlength="4">
-            </div>
+            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+            <input type="text" id="cvv" placeholder="CVV" maxlength="3" required>
         </div>
-        
         <button id="pay-now">Pay Now</button>
-        <button id="cancel-payment" type="button">Cancel</button>
+    </div>
+
+    <div id="delivery-form">
+        <h2>Delivery Details</h2>
+        <input type="text" id="customer-name" placeholder="Your Name" required>
+        <input type="tel" id="customer-phone" placeholder="Phone Number" required>
+        <textarea id="delivery-address" placeholder="Full Delivery Address" required></textarea>
+        <button id="confirm-delivery">Place Order</button>
     </div>
 
     <div id="success" style="display:none;">
-        <h2>Payment Successful! 🎉</h2>
-        <p>We've deducted the payment from your account</p>
-        <p>WhatsApp notification sent to 0731575601</p>
-        <div id="order-summary"></div>
-        <button id="new-order">Place New Order</button>
+        <h2>Order Confirmed! ✅</h2>
+        <p id="success-message"></p>
+        <div id="whatsapp-link"></div>
     </div>
 
     <script>
         const cart = [];
         const DELIVERY_FEE = 3;
         const OWNER_PHONE = '0731575601';
+        const OWNER_WHATSAPP = `https://wa.me/${OWNER_PHONE}`;
         
-        // Cart functions
+        // Add to cart
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.name;
+                const price = parseFloat(btn.dataset.price);
+                
+                // Check if item already in cart
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ name, price, quantity: 1 });
+                }
+                
+                updateCart();
+            });
+        });
+        
         function updateCart() {
-            const itemsEl = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
+            const cartItemsEl = document.getElementById('cart-items');
+            const cartTotalEl = document.getElementById('cart-total');
             
             if (cart.length === 0) {
-                itemsEl.innerHTML = '<p>Cart is empty</p>';
-                totalEl.textContent = 'Total: R0.00';
+                cartItemsEl.innerHTML = '<p>Cart is empty</p>';
+                cartTotalEl.textContent = 'Total: R0.00';
                 return;
             }
             
@@ -159,6 +180,7 @@
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
+                
                 html += `
                     <div style="margin: 10px 0; display: flex; justify-content: space-between; align-items: center;">
                         <div>
@@ -172,136 +194,142 @@
                 `;
             });
             
-            const delivery = document.getElementById('delivery').checked ? DELIVERY_FEE : 0;
-            const total = subtotal + delivery;
-            
-            if (delivery > 0) {
-                html += `
-                    <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                        <div>Delivery Fee</div>
-                        <div>R${DELIVERY_FEE.toFixed(2)}</div>
-                    </div>
-                `;
-            }
-            
-            itemsEl.innerHTML = html;
-            totalEl.textContent = `Total: R${total.toFixed(2)}`;
-        }
-        
-        function addItem(name, price) {
-            const existing = cart.find(item => item.name === name);
-            if (existing) existing.quantity++;
-            else cart.push({ name, price, quantity: 1 });
-            updateCart();
+            cartItemsEl.innerHTML = html;
+            cartTotalEl.textContent = `Total: R${subtotal.toFixed(2)}`;
         }
         
         function updateQuantity(index, change) {
             cart[index].quantity += change;
-            if (cart[index].quantity < 1) cart.splice(index, 1);
+            
+            if (cart[index].quantity < 1) {
+                cart.splice(index, 1);
+            }
+            
             updateCart();
         }
-
-        // Event listeners
-        document.querySelectorAll('.add-to-cart').forEach(btn => {
-            btn.addEventListener('click', () => addItem(btn.dataset.name, parseFloat(btn.dataset.price)));
-        });
         
+        // Checkout
         document.getElementById('checkout-btn').addEventListener('click', () => {
-            if (cart.length === 0) return alert('Your cart is empty');
-            document.getElementById('payment-form').style.display = 'block';
+            if (cart.length === 0) return alert("Your cart is empty");
+            document.getElementById('payment-options').style.display = 'block';
         });
         
-        document.querySelectorAll('input[name="delivery"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                document.getElementById('address').style.display = 
-                    document.getElementById('delivery').checked ? 'block' : 'none';
-                updateCart();
-            });
+        // Payment method selection
+        document.getElementById('confirm-payment-method').addEventListener('click', () => {
+            const isCardPayment = document.getElementById('pay-card').checked;
+            
+            if (isCardPayment) {
+                document.getElementById('payment-form').style.display = 'block';
+            } else {
+                document.getElementById('delivery-form').style.display = 'block';
+            }
+            
+            document.getElementById('payment-options').style.display = 'none';
         });
         
-        document.getElementById('pay-now').addEventListener('click', processPayment);
-        document.getElementById('cancel-payment').addEventListener('click', () => {
-            document.getElementById('payment-form').style.display = 'none';
-        });
-        document.getElementById('new-order').addEventListener('click', () => {
-            document.getElementById('success').style.display = 'none';
-            document.getElementById('payment-form').reset();
-            document.getElementById('address').style.display = 'none';
-        });
-
-        // Format expiry date input
-        document.getElementById('expiry').addEventListener('input', function(e) {
-            if (this.value.length === 2 && !this.value.includes('/')) {
-                this.value = this.value + '/';
-            }
-        });
-
-        async function processPayment() {
-            const payBtn = document.getElementById('pay-now');
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const cardType = document.getElementById('card-type').value;
-            const cardNumber = document.getElementById('card-number').value.trim();
-            const expiry = document.getElementById('expiry').value.trim();
-            const cvv = document.getElementById('cvv').value.trim();
-            const address = document.getElementById('address').value.trim();
+        // Process Card Payment
+        document.getElementById('pay-now').addEventListener('click', () => {
+            const cardNumber = document.getElementById('card-number').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
             
-            // Validate inputs
-            if (!name || !phone) return alert('Please enter your name and phone number');
-            if (!cardType) return alert('Please select card type');
-            if (cardNumber.length !== 16) return alert('Card number must be 16 digits');
-            if (!expiry.match(/^\d{2}\/\d{2}$/)) return alert('Enter expiry date in MM/YY format');
-            if (cvv.length < 3 || cvv.length > 4) return alert('CVV must be 3 or 4 digits');
-            if (document.getElementById('delivery').checked && !address) {
-                return alert('Please enter delivery address');
-            }
+            if (!validateCard(cardNumber, expiry, cvv)) return;
             
-            // Calculate total
+            const total = calculateTotal(true);
+            processOrder(total, "Card payment processed", false);
+        });
+        
+        // Process Delivery Order
+        document.getElementById('confirm-delivery').addEventListener('click', () => {
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+            const address = document.getElementById('delivery-address').value;
+            
+            if (!name || !phone || !address) return alert("Please fill all delivery details");
+            
+            const total = calculateTotal(true);
+            processOrder(total, "Cash on delivery", true, name, phone, address);
+        });
+        
+        function calculateTotal(includeDelivery = false) {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const total = subtotal + (document.getElementById('delivery').checked ? DELIVERY_FEE : 0);
-            
-            // Show processing
-            payBtn.disabled = true;
-            payBtn.classList.add('processing');
-            payBtn.textContent = 'Processing Payment...';
-            
-            // Simulate payment processing (2 seconds)
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            // Create order summary
-            let summary = `💳 PAYMENT RECEIVED: R${total.toFixed(2)}\n`;
-            summary += `👤 Customer: ${name}\n📞 Phone: ${phone}\n\n`;
-            summary += `🍽️ ORDER DETAILS:\n`;
-            cart.forEach(item => summary += `- ${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`);
-            summary += `\n💰 Subtotal: R${subtotal.toFixed(2)}\n`;
-            if (document.getElementById('delivery').checked) {
-                summary += `🚚 Delivery Fee: R${DELIVERY_FEE.toFixed(2)}\n`;
+            const isDelivery = includeDelivery && document.getElementById('pay-delivery').checked;
+            return subtotal + (isDelivery ? DELIVERY_FEE : 0);
+        }
+        
+        function validateCard(cardNumber, expiry, cvv) {
+            if (cardNumber.length !== 16) {
+                alert("Card number must be 16 digits");
+                return false;
             }
-            summary += `💵 TOTAL PAID: R${total.toFixed(2)}\n\n`;
-            summary += document.getElementById('delivery').checked ? 
-                `📍 DELIVERY ADDRESS:\n${address}` : '🛒 COLLECTION';
+            if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+                alert("Enter expiry as MM/YY");
+                return false;
+            }
+            if (cvv.length !== 3) {
+                alert("CVV must be 3 digits");
+                return false;
+            }
+            return true;
+        }
+        
+        function processOrder(total, paymentMethod, isDelivery, name = '', phone = '', address = '') {
+            // Create order summary
+            let summary = `🍽️ *NEW ORDER* 🍽️\n\n`;
+            summary += `💰 *Total Amount:* R${total.toFixed(2)}\n`;
+            summary += `💳 *Payment Method:* ${paymentMethod}\n\n`;
+            
+            // Add items
+            summary += `📋 *Order Items:*\n`;
+            cart.forEach(item => {
+                summary += `- ${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
+            });
+            
+            // Add delivery info if applicable
+            if (isDelivery) {
+                summary += `\n🚚 *Delivery Details:*\n`;
+                summary += `- Name: ${name}\n`;
+                summary += `- Phone: ${phone}\n`;
+                summary += `- Address: ${address}\n`;
+                summary += `- Delivery Fee: R${DELIVERY_FEE.toFixed(2)}\n`;
+            } else {
+                summary += `\n🛒 *Collection*`;
+            }
+            
+            // Create WhatsApp link
+            const whatsappUrl = `${OWNER_WHATSAPP}?text=${encodeURIComponent(summary)}`;
             
             // Show success
             document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('delivery-form').style.display = 'none';
             document.getElementById('success').style.display = 'block';
-            document.getElementById('order-summary').innerHTML = summary.replace(/\n/g, '<br>');
             
-            // Log payment details (simulated)
-            console.log('💳 Payment processed from card:', cardNumber.slice(-4));
-            console.log('📲 WhatsApp notification sent to:', OWNER_PHONE);
-            console.log('📋 Order details:\n', summary);
+            document.getElementById('success-message').innerHTML = `
+                <p>Payment method: <strong>${paymentMethod}</strong></p>
+                <p>Total amount: <strong>R${total.toFixed(2)}</strong></p>
+                ${isDelivery ? `<p>Delivery to: <strong>${address}</strong></p>` : ''}
+            `;
             
-            // In a real app, you would:
-            // 1. Connect to payment gateway API
-            // 2. Actually deduct money from customer's account
-            // 3. Send WhatsApp via API (not just console.log)
+            document.getElementById('whatsapp-link').innerHTML = `
+                <a href="${whatsappUrl}" target="_blank" style="
+                    background: #25D366;
+                    color: white;
+                    padding: 10px 15px;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    display: inline-block;
+                    margin-top: 10px;
+                ">
+                    View Order on WhatsApp
+                </a>
+            `;
             
             // Clear cart
             cart.length = 0;
             updateCart();
-            payBtn.disabled = false;
-            payBtn.classList.remove('processing');
-            payBtn.textContent = 'Pay Now';
+            
+            console.log("Order processed:", summary);
+            console.log("WhatsApp notification ready:", whatsappUrl);
         }
     </script>
 </body>
