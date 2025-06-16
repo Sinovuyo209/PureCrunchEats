@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cart = [];
     const deliveryFee = 3;
     const ownerPhone = '0731575601';
+    const capitecAccount = '2016489258';
     
     // Toggle address field based on delivery option
     document.querySelectorAll('input[name="delivery"]').forEach(radio => {
@@ -131,12 +132,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Show processing animation
-        document.querySelector('.payment-processing').style.display = 'block';
+        document.getElementById('payment-processing').style.display = 'block';
         
         // Simulate payment processing (2 seconds)
         setTimeout(() => {
-            document.querySelector('.payment-processing').style.display = 'none';
-            document.querySelector('.payment-success').style.display = 'block';
+            document.getElementById('payment-processing').style.display = 'none';
+            document.getElementById('payment-success').style.display = 'block';
             
             // Calculate total
             let subtotal = 0;
@@ -155,8 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             orderSummary += `Total: R${total.toFixed(2)}\n\n`;
             orderSummary += `Payment Method: Bank Transfer\n`;
-            orderSummary += `Bank: ${bankName}\n`;
-            orderSummary += `Account: ${accountNumber}\n\n`;
+            orderSummary += `From: ${bankName} (${accountNumber})\n`;
+            orderSummary += `To: Capitec ${capitecAccount}\n\n`;
             orderSummary += `${deliveryType === 'delivery' ? 'Delivery to: ' + address : 'For collection'}`;
             
             // Display order summary
@@ -164,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Simulate WhatsApp notification to owner
             console.log(`Sending to ${ownerPhone}:\n${orderSummary}`);
+            alert(`Order confirmed! Notification sent to ${ownerPhone}`);
             
             // Clear cart
             cart.length = 0;
@@ -176,8 +178,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirm('Are you sure you want to cancel this order?')) {
             document.getElementById('payment-form').style.display = 'none';
             document.getElementById('checkout-btn').style.display = 'block';
-            document.querySelector('.payment-processing').style.display = 'none';
-            document.querySelector('.payment-success').style.display = 'none';
+            document.getElementById('payment-processing').style.display = 'none';
+            document.getElementById('payment-success').style.display = 'none';
         }
     });
 });
