@@ -121,46 +121,47 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('process-payment').addEventListener('click', function() {
         const name = document.getElementById('name').value.trim();
         const phone = document.getElementById('phone').value.trim();
-        const bankName = document.getElementById('bank-name').value.trim();
-        const accountNumber = document.getElementById('account-number').value.trim();
         const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
         const address = deliveryType === 'delivery' ? document.getElementById('address').value.trim() : '';
+        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+        const bankName = paymentMethod === 'online' ? document.getElementById('bank-name').value.trim() : '';
+        const accountNumber = paymentMethod === 'online' ? document.getElementById('account-number').value.trim() : '';
         
-        if (!name || !phone || !bankName || !accountNumber || (deliveryType === 'delivery' && !address)) {
+        // Validate fields
+        if (!name || !phone || (deliveryType === 'delivery' && !address) || 
+            (paymentMethod === 'online' && (!bankName || !accountNumber))) {
             alert('Please fill in all required fields');
             return;
         }
         
-        // Show processing animation
-        document.getElementById('payment-processing').style.display = 'block';
+        // Calculate total
+        let subtotal = 0;
+        cart.forEach(item => subtotal += item.price * item.quantity);
+        const total = deliveryType === 'delivery' ? subtotal + deliveryFee : subtotal;
         
-        // Simulate payment processing (2 seconds)
-        setTimeout(() => {
-            document.getElementById('payment-processing').style.display = 'none';
-            document.getElementById('payment-success').style.display = 'block';
-            
-            // Calculate total
-            let subtotal = 0;
-            cart.forEach(item => subtotal += item.price * item.quantity);
-            const total = deliveryType === 'delivery' ? subtotal + deliveryFee : subtotal;
-            
-            // Create order summary
-            let orderSummary = `New Order from ${name} (${phone}):\n\n`;
-            cart.forEach(item => {
-                orderSummary += `${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
-            });
-            
-            orderSummary += `\nSubtotal: R${subtotal.toFixed(2)}\n`;
-            if (deliveryType === 'delivery') {
-                orderSummary += `Delivery Fee: R${deliveryFee.toFixed(2)}\n`;
-            }
-            orderSummary += `Total: R${total.toFixed(2)}\n\n`;
-            orderSummary += `Payment Method: Bank Transfer\n`;
+        // Create order summary
+        let orderSummary = `New Order from ${name} (${phone}):\n\n`;
+        cart.forEach(item => {
+            orderSummary += `${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
+        });
+        
+        orderSummary += `\nSubtotal: R${subtotal.toFixed(2)}\n`;
+        if (deliveryType === 'delivery') {
+            orderSummary += `Delivery Fee: R${deliveryFee.toFixed(2)}\n`;
+        }
+        orderSummary += `Total: R${total.toFixed(2)}\n\n`;
+        orderSummary += `Payment Method: ${paymentMethod === 'online' ? 'Bank Transfer' : 'Cash on Delivery'}\n`;
+        if (paymentMethod === 'online') {
             orderSummary += `From: ${bankName} (${accountNumber})\n`;
-            orderSummary += `To: Capitec ${capitecAccount}\n\n`;
-            orderSummary += `${deliveryType === 'delivery' ? 'Delivery to: ' + address : 'For collection'}`;
-            
-            // Display order summary
+            orderSummary += `To: Capitec ${capitecAccount}\n`;
+        }
+        orderSummary += `\n${deliveryType === 'delivery' ? 'Delivery to: ' + address : 'For collection'}`;
+        
+        // Simulate payment processing
+        setTimeout(() => {
+            // Show success message
+            document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('payment-success').style.display = 'block';
             document.getElementById('order-summary').innerHTML = orderSummary.replace(/\n/g, '<br>');
             
             // Simulate WhatsApp notification to owner
@@ -170,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Clear cart
             cart.length = 0;
             updateCart();
-        }, 2000);
+        }, 1500);
     });
     
     // Cancel order button
@@ -178,8 +179,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirm('Are you sure you want to cancel this order?')) {
             document.getElementById('payment-form').style.display = 'none';
             document.getElementById('checkout-btn').style.display = 'block';
-            document.getElementById('payment-processing').style.display = 'none';
             document.getElementById('payment-success').style.display = 'none';
         }
+    });
+    
+    // New order button
+    document.getElementById('new-order').addEventListener('click', function() {
+        document.getElementById('payment-success').style.display = 'none';
+        document.getElementById('checkout-btn').style.display = 'block';
     });
 });
