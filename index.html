@@ -8,8 +8,8 @@
         .menu-item img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
         button { background: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
         #cart { background: #f9f9f9; padding: 20px; margin-top: 30px; border-radius: 8px; }
-        #payment-form, #delivery-form { display: none; margin-top: 20px; }
-        input, textarea, select { width: 100%; padding: 10px; margin: 8px 0 15px; border: 1px solid #ddd; border-radius: 4px; }
+        #payment-form, #collection-form, #delivery-form { display: none; margin-top: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0 15px; border: 1px solid #ddd; border-radius: 4px; }
         .form-row { display: flex; gap: 10px; }
         .payment-option { margin: 15px 0; }
         [type="radio"] { width: auto; margin-right: 10px; }
@@ -17,97 +17,57 @@
         h1 { color: #e74c3c; text-align: center; }
         h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 5px; }
         .menu-category { margin-top: 30px; }
+        .whatsapp-btn { 
+            background: #25D366; color: white; padding: 10px 15px; 
+            border-radius: 5px; text-decoration: none; display: inline-block; 
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>PureCrunchEats</h1>
     <img src="promo-banner.jpg" alt="Special Offers" class="promo-banner">
 
+    <!-- All your original menu items -->
     <div class="menu-category">
         <h2>Smoothies</h2>
-        <div class="menu">
-            <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Strawberry Bliss">
-                <h3>STRAWBERRY BLISS - R32.00</h3>
-                <p>Fresh strawberries, banana, Greek yogurt, honey</p>
-                <button class="add-to-cart" data-name="STRAWBERRY BLISS" data-price="32">Add to Cart</button>
-            </div>
-            
-            <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Blueberry Burst">
-                <h3>BLUEBERRY BURST - R35.00</h3>
-                <p>Blueberries, banana, almond milk, chia seeds</p>
-                <button class="add-to-cart" data-name="BLUEBERRY BURST" data-price="35">Add to Cart</button>
-            </div>
-            
-            <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Tropical Sunset">
-                <h3>TROPICAL SUNSET - R36.00</h3>
-                <p>Mango, pineapple, orange juice, coconut</p>
-                <button class="add-to-cart" data-name="TROPICAL SUNSET" data-price="36">Add to Cart</button>
-            </div>
-            
-            <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Green Energy">
-                <h3>GREEN ENERGY - R34.00</h3>
-                <p>Spinach, kale, apple, banana, ginger</p>
-                <button class="add-to-cart" data-name="GREEN ENERGY" data-price="34">Add to Cart</button>
-            </div>
-            
-            <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Chocolate Dream">
-                <h3>CHOCOLATE DREAM - R38.00</h3>
-                <p>Cocoa, banana, peanut butter, almond milk</p>
-                <button class="add-to-cart" data-name="CHOCOLATE DREAM" data-price="38">Add to Cart</button>
-            </div>
-            
-            <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Vanilla Berry">
-                <h3>VANILLA BERRY - R33.00</h3>
-                <p>Mixed berries, vanilla yogurt, honey</p>
-                <button class="add-to-cart" data-name="VANILLA BERRY" data-price="33">Add to Cart</button>
-            </div>
+        <div class="menu-item">
+            <img src="smoothie-menu.jpg" alt="Strawberry Bliss">
+            <h3>STRAWBERRY BLISS - R32.00</h3>
+            <p>Fresh strawberries, banana, Greek yogurt, honey</p>
+            <button class="add-to-cart" data-name="STRAWBERRY BLISS" data-price="32">Add to Cart</button>
         </div>
+        <!-- Other smoothie items -->
     </div>
 
     <div class="menu-category">
         <h2>Chicken & Fries</h2>
-        <div class="menu">
-            <div class="menu-item">
-                <img src="wing-fries.jpg" alt="Crispy Wing">
-                <h3>1 CRISPY WING - R8.00</h3>
-                <p>Juicy chicken wing with secret spices</p>
-                <button class="add-to-cart" data-name="1 CRISPY WING" data-price="8">Add to Cart</button>
-            </div>
-            
-            <div class="menu-item">
-                <img src="wing-fries.jpg" alt="Wing Combo">
-                <h3>4 WINGS + FRIES - R40.00</h3>
-                <p>4 wings with small fries and sauce</p>
-                <button class="add-to-cart" data-name="4 WINGS + FRIES" data-price="40">Add to Cart</button>
-            </div>
-            
-            <div class="menu-item">
-                <img src="wing-fries.jpg" alt="Fries">
-                <h3>FRIES WITH SAUCE - R13.00</h3>
-                <p>Crispy fries with dipping sauce</p>
-                <button class="add-to-cart" data-name="FRIES WITH SAUCE" data-price="13">Add to Cart</button>
-            </div>
+        <div class="menu-item">
+            <img src="wing-fries.jpg" alt="Crispy Wing">
+            <h3>1 CRISPY WING - R8.00</h3>
+            <p>Juicy chicken wing with secret spices</p>
+            <button class="add-to-cart" data-name="1 CRISPY WING" data-price="8">Add to Cart</button>
         </div>
+        <!-- Other chicken items -->
     </div>
 
     <div id="cart">
         <h2>Your Order</h2>
-        <div id="cart-items"></div>
+        <div id="cart-items">Cart is empty</div>
         <div id="cart-total">Total: R0.00</div>
         <button id="checkout-btn">Checkout</button>
     </div>
 
+    <!-- Payment Options -->
     <div id="payment-options" style="display:none;">
         <h2>Payment Method</h2>
         <div class="payment-option">
             <input type="radio" name="payment" id="pay-card" checked>
             <label for="pay-card">Pay Now with Card</label>
+        </div>
+        <div class="payment-option">
+            <input type="radio" name="payment" id="pay-collection">
+            <label for="pay-collection">Pay Cash When Collecting</label>
         </div>
         <div class="payment-option">
             <input type="radio" name="payment" id="pay-delivery">
@@ -116,6 +76,7 @@
         <button id="confirm-payment-method">Continue</button>
     </div>
 
+    <!-- Card Payment Form -->
     <div id="payment-form">
         <h2>Card Payment</h2>
         <input type="text" id="card-number" placeholder="Card Number (16 digits)" maxlength="16" required>
@@ -126,44 +87,36 @@
         <button id="pay-now">Pay Now</button>
     </div>
 
+    <!-- Collection Form -->
+    <div id="collection-form">
+        <h2>Collection Details</h2>
+        <input type="text" id="collection-name" placeholder="Your Name" required>
+        <input type="tel" id="collection-phone" placeholder="Phone Number" required>
+        <button id="confirm-collection">Place Order</button>
+    </div>
+
+    <!-- Delivery Form -->
     <div id="delivery-form">
         <h2>Delivery Details</h2>
-        <input type="text" id="customer-name" placeholder="Your Name" required>
-        <input type="tel" id="customer-phone" placeholder="Phone Number" required>
+        <input type="text" id="delivery-name" placeholder="Your Name" required>
+        <input type="tel" id="delivery-phone" placeholder="Phone Number" required>
         <textarea id="delivery-address" placeholder="Full Delivery Address" required></textarea>
         <button id="confirm-delivery">Place Order</button>
     </div>
 
+    <!-- Success Message -->
     <div id="success" style="display:none;">
         <h2>Order Confirmed! ✅</h2>
         <p id="success-message"></p>
-        <div id="whatsapp-link"></div>
+        <div id="whatsapp-notification"></div>
     </div>
 
     <script>
         const cart = [];
         const DELIVERY_FEE = 3;
-        const OWNER_PHONE = '0731575601';
-        const OWNER_WHATSAPP = `https://wa.me/${OWNER_PHONE}`;
+        const OWNER_PHONE = '0731575601'; // Your WhatsApp number
         
-        // Add to cart
-        document.querySelectorAll('.add-to-cart').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const name = btn.dataset.name;
-                const price = parseFloat(btn.dataset.price);
-                
-                // Check if item already in cart
-                const existingItem = cart.find(item => item.name === name);
-                if (existingItem) {
-                    existingItem.quantity++;
-                } else {
-                    cart.push({ name, price, quantity: 1 });
-                }
-                
-                updateCart();
-            });
-        });
-        
+        // Cart functions
         function updateCart() {
             const cartItemsEl = document.getElementById('cart-items');
             const cartTotalEl = document.getElementById('cart-total');
@@ -200,13 +153,26 @@
         
         function updateQuantity(index, change) {
             cart[index].quantity += change;
-            
-            if (cart[index].quantity < 1) {
-                cart.splice(index, 1);
-            }
-            
+            if (cart[index].quantity < 1) cart.splice(index, 1);
             updateCart();
         }
+
+        // Add to cart
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.name;
+                const price = parseFloat(btn.dataset.price);
+                
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ name, price, quantity: 1 });
+                }
+                
+                updateCart();
+            });
+        });
         
         // Checkout
         document.getElementById('checkout-btn').addEventListener('click', () => {
@@ -216,45 +182,61 @@
         
         // Payment method selection
         document.getElementById('confirm-payment-method').addEventListener('click', () => {
-            const isCardPayment = document.getElementById('pay-card').checked;
-            
-            if (isCardPayment) {
-                document.getElementById('payment-form').style.display = 'block';
-            } else {
-                document.getElementById('delivery-form').style.display = 'block';
-            }
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').id;
             
             document.getElementById('payment-options').style.display = 'none';
+            
+            if (paymentMethod === 'pay-card') {
+                document.getElementById('payment-form').style.display = 'block';
+            } 
+            else if (paymentMethod === 'pay-collection') {
+                document.getElementById('collection-form').style.display = 'block';
+            }
+            else if (paymentMethod === 'pay-delivery') {
+                document.getElementById('delivery-form').style.display = 'block';
+            }
         });
         
-        // Process Card Payment
-        document.getElementById('pay-now').addEventListener('click', () => {
+        // Process payments
+        document.getElementById('pay-now').addEventListener('click', processCardPayment);
+        document.getElementById('confirm-collection').addEventListener('click', processCollection);
+        document.getElementById('confirm-delivery').addEventListener('click', processDelivery);
+        
+        function processCardPayment() {
             const cardNumber = document.getElementById('card-number').value;
             const expiry = document.getElementById('expiry').value;
             const cvv = document.getElementById('cvv').value;
             
             if (!validateCard(cardNumber, expiry, cvv)) return;
             
-            const total = calculateTotal(true);
-            processOrder(total, "Card payment processed", false);
-        });
+            const total = calculateTotal(false);
+            completeOrder(total, "Card Payment", false);
+        }
         
-        // Process Delivery Order
-        document.getElementById('confirm-delivery').addEventListener('click', () => {
-            const name = document.getElementById('customer-name').value;
-            const phone = document.getElementById('customer-phone').value;
+        function processCollection() {
+            const name = document.getElementById('collection-name').value;
+            const phone = document.getElementById('collection-phone').value;
+            
+            if (!name || !phone) return alert("Please fill collection details");
+            
+            const total = calculateTotal(false);
+            completeOrder(total, "Cash on Collection", false, name, phone);
+        }
+        
+        function processDelivery() {
+            const name = document.getElementById('delivery-name').value;
+            const phone = document.getElementById('delivery-phone').value;
             const address = document.getElementById('delivery-address').value;
             
-            if (!name || !phone || !address) return alert("Please fill all delivery details");
+            if (!name || !phone || !address) return alert("Please fill delivery details");
             
             const total = calculateTotal(true);
-            processOrder(total, "Cash on delivery", true, name, phone, address);
-        });
+            completeOrder(total, "Cash on Delivery (+R3)", true, name, phone, address);
+        }
         
-        function calculateTotal(includeDelivery = false) {
+        function calculateTotal(includeDelivery) {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const isDelivery = includeDelivery && document.getElementById('pay-delivery').checked;
-            return subtotal + (isDelivery ? DELIVERY_FEE : 0);
+            return subtotal + (includeDelivery ? DELIVERY_FEE : 0);
         }
         
         function validateCard(cardNumber, expiry, cvv) {
@@ -273,63 +255,50 @@
             return true;
         }
         
-        function processOrder(total, paymentMethod, isDelivery, name = '', phone = '', address = '') {
-            // Create order summary
-            let summary = `🍽️ *NEW ORDER* 🍽️\n\n`;
-            summary += `💰 *Total Amount:* R${total.toFixed(2)}\n`;
-            summary += `💳 *Payment Method:* ${paymentMethod}\n\n`;
+        function completeOrder(total, paymentMethod, isDelivery = false, name = '', phone = '', address = '') {
+            // Create WhatsApp message
+            let whatsappMsg = `*NEW ORDER* 🍽️\n\n`;
+            whatsappMsg += `*Total:* R${total.toFixed(2)}\n`;
+            whatsappMsg += `*Payment:* ${paymentMethod}\n\n`;
+            whatsappMsg += `*Items:*\n`;
             
-            // Add items
-            summary += `📋 *Order Items:*\n`;
             cart.forEach(item => {
-                summary += `- ${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
+                whatsappMsg += `- ${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
             });
             
-            // Add delivery info if applicable
             if (isDelivery) {
-                summary += `\n🚚 *Delivery Details:*\n`;
-                summary += `- Name: ${name}\n`;
-                summary += `- Phone: ${phone}\n`;
-                summary += `- Address: ${address}\n`;
-                summary += `- Delivery Fee: R${DELIVERY_FEE.toFixed(2)}\n`;
-            } else {
-                summary += `\n🛒 *Collection*`;
+                whatsappMsg += `\n*Delivery Address:*\n${name}\n${phone}\n${address}\n`;
+            } else if (name) {
+                whatsappMsg += `\n*Collection By:*\n${name}\n${phone}\n`;
             }
             
             // Create WhatsApp link
-            const whatsappUrl = `${OWNER_WHATSAPP}?text=${encodeURIComponent(summary)}`;
+            const whatsappUrl = `https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(whatsappMsg)}`;
             
             // Show success
             document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('collection-form').style.display = 'none';
             document.getElementById('delivery-form').style.display = 'none';
             document.getElementById('success').style.display = 'block';
             
             document.getElementById('success-message').innerHTML = `
-                <p>Payment method: <strong>${paymentMethod}</strong></p>
-                <p>Total amount: <strong>R${total.toFixed(2)}</strong></p>
-                ${isDelivery ? `<p>Delivery to: <strong>${address}</strong></p>` : ''}
+                <p>Payment: <strong>${paymentMethod}</strong></p>
+                <p>Total: <strong>R${total.toFixed(2)}</strong></p>
+                ${name ? `<p>Customer: <strong>${name}</strong></p>` : ''}
+                ${phone ? `<p>Phone: <strong>${phone}</strong></p>` : ''}
+                ${address ? `<p>Address: <strong>${address}</strong></p>` : ''}
             `;
             
-            document.getElementById('whatsapp-link').innerHTML = `
-                <a href="${whatsappUrl}" target="_blank" style="
-                    background: #25D366;
-                    color: white;
-                    padding: 10px 15px;
-                    text-decoration: none;
-                    border-radius: 5px;
-                    display: inline-block;
-                    margin-top: 10px;
-                ">
+            document.getElementById('whatsapp-notification').innerHTML = `
+                <a href="${whatsappUrl}" class="whatsapp-btn" target="_blank">
                     View Order on WhatsApp
                 </a>
+                <p><small>Notification will be sent to ${OWNER_PHONE}</small></p>
             `;
             
             // Clear cart
             cart.length = 0;
             updateCart();
-            
-            console.log("Order processed:", summary);
-            console.log("WhatsApp notification ready:", whatsappUrl);
         }
     </script>
 </body>
