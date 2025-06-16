@@ -3,33 +3,30 @@
 <head>
     <title>PureCrunchEats - Order Online</title>
     <style>
-        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .menu-item { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; background: #f9f9f9; }
+        .menu-item { background: white; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .menu-item img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
-        button { background: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
-        #cart { background: #f9f9f9; padding: 20px; margin-top: 30px; border-radius: 8px; }
-        #payment-form, #collection-form, #delivery-form { display: none; margin-top: 20px; }
-        input, textarea { width: 100%; padding: 10px; margin: 8px 0 15px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        #cart { background: white; padding: 20px; margin-top: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .payment-form { display: none; background: white; padding: 20px; margin-top: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
         .form-row { display: flex; gap: 10px; }
-        .payment-option { margin: 15px 0; }
-        [type="radio"] { width: auto; margin-right: 10px; }
+        .form-row > div { flex: 1; }
         .promo-banner { width: 100%; border-radius: 8px; margin: 20px 0; }
-        h1 { color: #e74c3c; text-align: center; }
-        h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 5px; }
-        .menu-category { margin-top: 30px; }
-        .whatsapp-btn { 
-            background: #25D366; color: white; padding: 10px 15px; 
-            border-radius: 5px; text-decoration: none; display: inline-block; 
-            margin-top: 10px;
-        }
+        h1 { color: #e74c3c; text-align: center; margin-bottom: 5px; }
+        h2 { color: #333; border-bottom: 2px solid #e74c3c; padding-bottom: 5px; }
+        .whatsapp-btn { background: #25D366; color: white; padding: 12px 20px; border-radius: 5px; text-decoration: none; display: inline-block; font-weight: bold; margin-top: 15px; }
+        .success-message { background: #27ae60; color: white; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .payment-option { margin: 15px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
     </style>
 </head>
 <body>
     <h1>PureCrunchEats</h1>
+    <p style="text-align: center; color: #666;">Premium Smoothies & Chicken - Order Online</p>
     <img src="promo-banner.jpg" alt="Special Offers" class="promo-banner">
 
-    <!-- All your original menu items -->
-    <div class="menu-category">
+    <!-- Smoothies Menu -->
+    <div>
         <h2>Smoothies</h2>
         <div class="menu-item">
             <img src="smoothie-menu.jpg" alt="Strawberry Bliss">
@@ -37,10 +34,31 @@
             <p>Fresh strawberries, banana, Greek yogurt, honey</p>
             <button class="add-to-cart" data-name="STRAWBERRY BLISS" data-price="32">Add to Cart</button>
         </div>
-        <!-- Other smoothie items -->
+        
+        <div class="menu-item">
+            <img src="smoothie-menu.jpg" alt="Blueberry Burst">
+            <h3>BLUEBERRY BURST - R35.00</h3>
+            <p>Blueberries, banana, almond milk, chia seeds</p>
+            <button class="add-to-cart" data-name="BLUEBERRY BURST" data-price="35">Add to Cart</button>
+        </div>
+        
+        <div class="menu-item">
+            <img src="smoothie-menu.jpg" alt="Tropical Sunset">
+            <h3>TROPICAL SUNSET - R36.00</h3>
+            <p>Mango, pineapple, orange juice, coconut</p>
+            <button class="add-to-cart" data-name="TROPICAL SUNSET" data-price="36">Add to Cart</button>
+        </div>
+        
+        <div class="menu-item">
+            <img src="smoothie-menu.jpg" alt="Green Energy">
+            <h3>GREEN ENERGY - R34.00</h3>
+            <p>Spinach, kale, apple, banana, ginger</p>
+            <button class="add-to-cart" data-name="GREEN ENERGY" data-price="34">Add to Cart</button>
+        </div>
     </div>
 
-    <div class="menu-category">
+    <!-- Chicken Menu -->
+    <div>
         <h2>Chicken & Fries</h2>
         <div class="menu-item">
             <img src="wing-fries.jpg" alt="Crispy Wing">
@@ -48,81 +66,139 @@
             <p>Juicy chicken wing with secret spices</p>
             <button class="add-to-cart" data-name="1 CRISPY WING" data-price="8">Add to Cart</button>
         </div>
-        <!-- Other chicken items -->
+        
+        <div class="menu-item">
+            <img src="wing-fries.jpg" alt="Wing Combo">
+            <h3>4 WINGS + FRIES - R40.00</h3>
+            <p>4 wings with small fries and sauce</p>
+            <button class="add-to-cart" data-name="4 WINGS + FRIES" data-price="40">Add to Cart</button>
+        </div>
+        
+        <div class="menu-item">
+            <img src="wing-fries.jpg" alt="Fries">
+            <h3>FRIES WITH SAUCE - R13.00</h3>
+            <p>Crispy fries with dipping sauce</p>
+            <button class="add-to-cart" data-name="FRIES WITH SAUCE" data-price="13">Add to Cart</button>
+        </div>
     </div>
 
+    <!-- Cart -->
     <div id="cart">
         <h2>Your Order</h2>
-        <div id="cart-items">Cart is empty</div>
+        <div id="cart-items">Your cart is empty</div>
         <div id="cart-total">Total: R0.00</div>
-        <button id="checkout-btn">Checkout</button>
+        <button id="checkout-btn">Proceed to Checkout</button>
     </div>
 
     <!-- Payment Options -->
-    <div id="payment-options" style="display:none;">
-        <h2>Payment Method</h2>
+    <div id="payment-options" class="payment-form">
+        <h2>Select Payment Method</h2>
+        
         <div class="payment-option">
-            <input type="radio" name="payment" id="pay-card" checked>
-            <label for="pay-card">Pay Now with Card</label>
+            <input type="radio" id="pay-online" name="payment" value="online" checked>
+            <label for="pay-online"><strong>Pay Now with Card</strong> (Instant payment)</label>
         </div>
+        
         <div class="payment-option">
-            <input type="radio" name="payment" id="pay-collection">
-            <label for="pay-collection">Pay Cash When Collecting</label>
+            <input type="radio" id="pay-collection" name="payment" value="collection">
+            <label for="pay-collection"><strong>Pay Cash When Collecting</strong> (No delivery fee)</label>
         </div>
+        
         <div class="payment-option">
-            <input type="radio" name="payment" id="pay-delivery">
-            <label for="pay-delivery">Pay Cash on Delivery (+R3 fee)</label>
+            <input type="radio" id="pay-delivery" name="payment" value="delivery">
+            <label for="pay-delivery"><strong>Pay Cash on Delivery</strong> (+R3 delivery fee)</label>
         </div>
-        <button id="confirm-payment-method">Continue</button>
+        
+        <button id="select-payment">Continue</button>
     </div>
 
     <!-- Card Payment Form -->
-    <div id="payment-form">
-        <h2>Card Payment</h2>
-        <input type="text" id="card-number" placeholder="Card Number (16 digits)" maxlength="16" required>
+    <div id="card-payment" class="payment-form">
+        <h2>Card Payment Details</h2>
+        
         <div class="form-row">
-            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
-            <input type="text" id="cvv" placeholder="CVV" maxlength="3" required>
+            <div>
+                <label>Card Number</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="16" required>
+            </div>
         </div>
-        <button id="pay-now">Pay Now</button>
+        
+        <div class="form-row">
+            <div>
+                <label>Expiry Date</label>
+                <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5" required>
+            </div>
+            <div>
+                <label>CVV</label>
+                <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div>
+                <label>Name on Card</label>
+                <input type="text" id="card-name" required>
+            </div>
+        </div>
+        
+        <button id="process-payment">Pay Now</button>
     </div>
 
     <!-- Collection Form -->
-    <div id="collection-form">
+    <div id="collection-payment" class="payment-form">
         <h2>Collection Details</h2>
-        <input type="text" id="collection-name" placeholder="Your Name" required>
-        <input type="tel" id="collection-phone" placeholder="Phone Number" required>
+        
+        <label>Your Full Name</label>
+        <input type="text" id="collection-name" required>
+        
+        <label>Phone Number</label>
+        <input type="tel" id="collection-phone" required>
+        
+        <p style="font-style: italic;">You'll pay cash when collecting your order</p>
         <button id="confirm-collection">Place Order</button>
     </div>
 
     <!-- Delivery Form -->
-    <div id="delivery-form">
+    <div id="delivery-payment" class="payment-form">
         <h2>Delivery Details</h2>
-        <input type="text" id="delivery-name" placeholder="Your Name" required>
-        <input type="tel" id="delivery-phone" placeholder="Phone Number" required>
-        <textarea id="delivery-address" placeholder="Full Delivery Address" required></textarea>
+        
+        <label>Your Full Name</label>
+        <input type="text" id="delivery-name" required>
+        
+        <label>Phone Number</label>
+        <input type="tel" id="delivery-phone" required>
+        
+        <label>Delivery Address</label>
+        <textarea id="delivery-address" required></textarea>
+        
+        <p style="font-style: italic;">R3 delivery fee added to total. You'll pay cash on delivery.</p>
         <button id="confirm-delivery">Place Order</button>
     </div>
 
     <!-- Success Message -->
-    <div id="success" style="display:none;">
+    <div id="success" class="payment-form" style="display:none; text-align:center;">
         <h2>Order Confirmed! ✅</h2>
-        <p id="success-message"></p>
+        <div class="success-message">
+            <p id="success-text"></p>
+        </div>
         <div id="whatsapp-notification"></div>
+        <button id="new-order">Place New Order</button>
     </div>
 
     <script>
-        const cart = [];
+        // Configuration
         const DELIVERY_FEE = 3;
-        const OWNER_PHONE = '0731575601'; // Your WhatsApp number
+        const OWNER_PHONE = '0731575601'; // Your WhatsApp number in South Africa
+        const cart = [];
         
-        // Cart functions
+        // DOM Elements
+        const cartItemsEl = document.getElementById('cart-items');
+        const cartTotalEl = document.getElementById('cart-total');
+        
+        // Update cart display
         function updateCart() {
-            const cartItemsEl = document.getElementById('cart-items');
-            const cartTotalEl = document.getElementById('cart-total');
-            
             if (cart.length === 0) {
-                cartItemsEl.innerHTML = '<p>Cart is empty</p>';
+                cartItemsEl.innerHTML = '<p>Your cart is empty</p>';
                 cartTotalEl.textContent = 'Total: R0.00';
                 return;
             }
@@ -138,9 +214,9 @@
                     <div style="margin: 10px 0; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             ${item.name} 
-                            <button onclick="updateQuantity(${index}, -1)" style="padding: 2px 8px;">-</button>
+                            <button onclick="updateQuantity(${index}, -1)" style="padding: 2px 8px; margin: 0 5px;">-</button>
                             ${item.quantity}
-                            <button onclick="updateQuantity(${index}, 1)" style="padding: 2px 8px;">+</button>
+                            <button onclick="updateQuantity(${index}, 1)" style="padding: 2px 8px; margin: 0 5px;">+</button>
                         </div>
                         <div>R${itemTotal.toFixed(2)}</div>
                     </div>
@@ -151,12 +227,17 @@
             cartTotalEl.textContent = `Total: R${subtotal.toFixed(2)}`;
         }
         
+        // Update item quantity
         function updateQuantity(index, change) {
             cart[index].quantity += change;
-            if (cart[index].quantity < 1) cart.splice(index, 1);
+            
+            if (cart[index].quantity < 1) {
+                cart.splice(index, 1);
+            }
+            
             updateCart();
         }
-
+        
         // Add to cart
         document.querySelectorAll('.add-to-cart').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -176,130 +257,165 @@
         
         // Checkout
         document.getElementById('checkout-btn').addEventListener('click', () => {
-            if (cart.length === 0) return alert("Your cart is empty");
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
             document.getElementById('payment-options').style.display = 'block';
         });
         
-        // Payment method selection
-        document.getElementById('confirm-payment-method').addEventListener('click', () => {
-            const paymentMethod = document.querySelector('input[name="payment"]:checked').id;
+        // Select payment method
+        document.getElementById('select-payment').addEventListener('click', () => {
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
             
-            document.getElementById('payment-options').style.display = 'none';
+            // Hide all forms first
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.style.display = 'none';
+            });
             
-            if (paymentMethod === 'pay-card') {
-                document.getElementById('payment-form').style.display = 'block';
-            } 
-            else if (paymentMethod === 'pay-collection') {
-                document.getElementById('collection-form').style.display = 'block';
-            }
-            else if (paymentMethod === 'pay-delivery') {
-                document.getElementById('delivery-form').style.display = 'block';
+            // Show selected form
+            if (paymentMethod === 'online') {
+                document.getElementById('card-payment').style.display = 'block';
+            } else if (paymentMethod === 'collection') {
+                document.getElementById('collection-payment').style.display = 'block';
+            } else if (paymentMethod === 'delivery') {
+                document.getElementById('delivery-payment').style.display = 'block';
             }
         });
         
-        // Process payments
-        document.getElementById('pay-now').addEventListener('click', processCardPayment);
-        document.getElementById('confirm-collection').addEventListener('click', processCollection);
-        document.getElementById('confirm-delivery').addEventListener('click', processDelivery);
-        
-        function processCardPayment() {
-            const cardNumber = document.getElementById('card-number').value;
-            const expiry = document.getElementById('expiry').value;
+        // Process card payment
+        document.getElementById('process-payment').addEventListener('click', () => {
+            // Validate card details
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+            const expiryDate = document.getElementById('expiry-date').value;
             const cvv = document.getElementById('cvv').value;
+            const cardName = document.getElementById('card-name').value;
             
-            if (!validateCard(cardNumber, expiry, cvv)) return;
+            if (!cardNumber || !expiryDate || !cvv || !cardName) {
+                alert('Please fill in all card details');
+                return;
+            }
             
-            const total = calculateTotal(false);
-            completeOrder(total, "Card Payment", false);
-        }
+            if (cardNumber.length !== 16 || !/^\d+$/.test(cardNumber)) {
+                alert('Please enter a valid 16-digit card number');
+                return;
+            }
+            
+            if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+                alert('Please enter expiry date in MM/YY format');
+                return;
+            }
+            
+            if (cvv.length !== 3 || !/^\d+$/.test(cvv)) {
+                alert('Please enter a valid 3-digit CVV');
+                return;
+            }
+            
+            // Calculate total
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal;
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                completeOrder(total, 'Card Payment (Online)', false, cardName, '', '');
+            }, 1000);
+        });
         
-        function processCollection() {
+        // Process collection order
+        document.getElementById('confirm-collection').addEventListener('click', () => {
             const name = document.getElementById('collection-name').value;
             const phone = document.getElementById('collection-phone').value;
             
-            if (!name || !phone) return alert("Please fill collection details");
+            if (!name || !phone) {
+                alert('Please fill in your name and phone number');
+                return;
+            }
             
-            const total = calculateTotal(false);
-            completeOrder(total, "Cash on Collection", false, name, phone);
-        }
+            // Calculate total
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal;
+            
+            completeOrder(total, 'Cash on Collection', false, name, phone, '');
+        });
         
-        function processDelivery() {
+        // Process delivery order
+        document.getElementById('confirm-delivery').addEventListener('click', () => {
             const name = document.getElementById('delivery-name').value;
             const phone = document.getElementById('delivery-phone').value;
             const address = document.getElementById('delivery-address').value;
             
-            if (!name || !phone || !address) return alert("Please fill delivery details");
+            if (!name || !phone || !address) {
+                alert('Please fill in all delivery details');
+                return;
+            }
             
-            const total = calculateTotal(true);
-            completeOrder(total, "Cash on Delivery (+R3)", true, name, phone, address);
-        }
-        
-        function calculateTotal(includeDelivery) {
+            // Calculate total
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            return subtotal + (includeDelivery ? DELIVERY_FEE : 0);
-        }
-        
-        function validateCard(cardNumber, expiry, cvv) {
-            if (cardNumber.length !== 16) {
-                alert("Card number must be 16 digits");
-                return false;
-            }
-            if (!/^\d{2}\/\d{2}$/.test(expiry)) {
-                alert("Enter expiry as MM/YY");
-                return false;
-            }
-            if (cvv.length !== 3) {
-                alert("CVV must be 3 digits");
-                return false;
-            }
-            return true;
-        }
-        
-        function completeOrder(total, paymentMethod, isDelivery = false, name = '', phone = '', address = '') {
-            // Create WhatsApp message
-            let whatsappMsg = `*NEW ORDER* 🍽️\n\n`;
-            whatsappMsg += `*Total:* R${total.toFixed(2)}\n`;
-            whatsappMsg += `*Payment:* ${paymentMethod}\n\n`;
-            whatsappMsg += `*Items:*\n`;
+            const total = subtotal + DELIVERY_FEE;
             
+            completeOrder(total, 'Cash on Delivery', true, name, phone, address);
+        });
+        
+        // Complete order and send notification
+        function completeOrder(total, paymentMethod, isDelivery, name, phone, address) {
+            // Create order summary
+            let summary = `*NEW ORDER FOR PureCrunchEats* 🍗🥤\n\n`;
+            summary += `*Customer:* ${name || 'Not provided'}\n`;
+            summary += `*Phone:* ${phone || 'Not provided'}\n\n`;
+            
+            summary += `*ORDER ITEMS:*\n`;
             cart.forEach(item => {
-                whatsappMsg += `- ${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
+                summary += `- ${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
             });
             
+            summary += `\n*Subtotal:* R${(total - (isDelivery ? DELIVERY_FEE : 0)).toFixed(2)}\n`;
             if (isDelivery) {
-                whatsappMsg += `\n*Delivery Address:*\n${name}\n${phone}\n${address}\n`;
-            } else if (name) {
-                whatsappMsg += `\n*Collection By:*\n${name}\n${phone}\n`;
+                summary += `*Delivery Fee:* R${DELIVERY_FEE.toFixed(2)}\n`;
+                summary += `*Delivery Address:* ${address}\n`;
             }
+            summary += `*TOTAL:* R${total.toFixed(2)}\n\n`;
+            summary += `*Payment Method:* ${paymentMethod}\n`;
+            summary += `*Time:* ${new Date().toLocaleString()}`;
             
             // Create WhatsApp link
-            const whatsappUrl = `https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(whatsappMsg)}`;
+            const whatsappUrl = `https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(summary)}`;
             
-            // Show success
-            document.getElementById('payment-form').style.display = 'none';
-            document.getElementById('collection-form').style.display = 'none';
-            document.getElementById('delivery-form').style.display = 'none';
+            // Show success message
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            
             document.getElementById('success').style.display = 'block';
-            
-            document.getElementById('success-message').innerHTML = `
-                <p>Payment: <strong>${paymentMethod}</strong></p>
-                <p>Total: <strong>R${total.toFixed(2)}</strong></p>
-                ${name ? `<p>Customer: <strong>${name}</strong></p>` : ''}
-                ${phone ? `<p>Phone: <strong>${phone}</strong></p>` : ''}
-                ${address ? `<p>Address: <strong>${address}</strong></p>` : ''}
-            `;
+            document.getElementById('success-text').textContent = `Order total: R${total.toFixed(2)} (${paymentMethod})`;
             
             document.getElementById('whatsapp-notification').innerHTML = `
+                <p>Notification sent to PureCrunchEats</p>
                 <a href="${whatsappUrl}" class="whatsapp-btn" target="_blank">
-                    View Order on WhatsApp
+                    <i class="fab fa-whatsapp"></i> View Order on WhatsApp
                 </a>
-                <p><small>Notification will be sent to ${OWNER_PHONE}</small></p>
             `;
             
             // Clear cart
             cart.length = 0;
             updateCart();
+            
+            // Reset forms
+            document.getElementById('card-payment').reset();
+            document.getElementById('collection-payment').reset();
+            document.getElementById('delivery-payment').reset();
         }
+        
+        // New order button
+        document.getElementById('new-order').addEventListener('click', () => {
+            document.getElementById('success').style.display = 'none';
+        });
+        
+        // Format expiry date input
+        document.getElementById('expiry-date').addEventListener('input', function(e) {
+            if (this.value.length === 2 && !this.value.includes('/')) {
+                this.value = this.value + '/';
+            }
+        });
     </script>
 </body>
 </html>
