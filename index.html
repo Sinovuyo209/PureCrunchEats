@@ -5,7 +5,356 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PureCrunchEats - Order Online</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --secondary: #27ae60;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .promo-banner {
+            width: 100%;
+            border-radius: 10px;
+            margin: 25px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .item-name {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin: 15px 15px 8px;
+            font-weight: bold;
+        }
+
+        .item-ingredients {
+            color: #666;
+            margin: 0 15px 15px;
+            font-size: 0.95rem;
+            min-height: 50px;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin: 15px;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: calc(100% - 30px);
+            margin: 0 15px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #c0392b;
+        }
+
+        .cart-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 50px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .remove-item {
+            color: var(--primary);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .cart-total {
+            font-weight: bold;
+            font-size: 1.4rem;
+            text-align: right;
+            padding-top: 15px;
+            border-top: 2px solid var(--primary);
+        }
+
+        .checkout-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #219955;
+        }
+
+        .cancel-btn {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background-color: #7f8c8d;
+        }
+
+        .payment-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .payment-form {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .delivery-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .delivery-option {
+            flex: 1;
+        }
+
+        .delivery-option input {
+            display: none;
+        }
+
+        .delivery-option label {
+            display: block;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .delivery-option input:checked + label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .payment-methods {
+            margin: 20px 0;
+        }
+
+        .payment-option {
+            margin-bottom: 15px;
+        }
+
+        .payment-option input {
+            display: none;
+        }
+
+        .payment-option label {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-option input:checked + label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .payment-option i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-details {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #pay-online:checked ~ .card-details {
+            display: block;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        input[type="text"], input[type="tel"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .payment-success {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .payment-success i {
+            color: var(--secondary);
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-section {
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                flex-direction: column;
+            }
+            .footer-section {
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .delivery-options {
+                flex-direction: column;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -89,7 +438,7 @@
             
             <div class="payment-info">
                 <h3>Payment Information</h3>
-                <p>We accept instant online payments from any bank account.</p>
+                <p>We accept card payments and cash on delivery.</p>
                 <p>For direct payments: <strong>Capitec Bank</strong></p>
                 <p>Account Number: <strong>2016489258</strong></p>
                 <p>Branch Code: <strong>470010</strong></p>
@@ -129,16 +478,26 @@
                     <div class="payment-option">
                         <input type="radio" id="pay-online" name="payment" value="online" checked>
                         <label for="pay-online">
-                            <i class="fas fa-mobile-alt"></i> Pay Now (Bank Transfer)
+                            <i class="fas fa-credit-card"></i> Pay Now (Card Payment)
                         </label>
-                        <div class="bank-details">
+                        <div class="card-details">
                             <div class="form-group">
-                                <label for="bank-name">Your Bank Name *</label>
-                                <input type="text" id="bank-name" required>
+                                <label for="card-number">Card Number *</label>
+                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiry-date">Expiry Date *</label>
+                                    <input type="text" id="expiry-date" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV *</label>
+                                    <input type="text" id="cvv" placeholder="123" required>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="account-number">Your Account Number *</label>
-                                <input type="text" id="account-number" required>
+                                <label for="card-name">Name on Card *</label>
+                                <input type="text" id="card-name" required>
                             </div>
                         </div>
                     </div>
@@ -181,6 +540,262 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = [];
+            const deliveryFee = 3;
+            const ownerPhone = '0731575601';
+            
+            // Toggle address field based on delivery option
+            document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    document.getElementById('address-group').style.display = 
+                        this.value === 'delivery' ? 'block' : 'none';
+                    updateCart();
+                });
+            });
+            
+            // Add to cart functionality
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const price = parseFloat(this.getAttribute('data-price'));
+                    
+                    const existingItem = cart.find(item => item.name === name);
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({ name, price, quantity: 1 });
+                    }
+                    
+                    updateCart();
+                });
+            });
+            
+            // Update cart display
+            function updateCart() {
+                const cartItems = document.getElementById('cart-items');
+                const cartTotal = document.getElementById('cart-total');
+                
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<p>Your cart is empty</p>';
+                    cartTotal.textContent = 'Total: R0.00';
+                    return;
+                }
+                
+                let html = '';
+                let subtotal = 0;
+                
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    
+                    html += `
+                        <div class="cart-item">
+                            <div>
+                                <span>${item.name}</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus" data-index="${index}">-</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="quantity-btn plus" data-index="${index}">+</button>
+                                    <button class="remove-item" data-index="${index}">&times;</button>
+                                </div>
+                            </div>
+                            <span>R${itemTotal.toFixed(2)}</span>
+                        </div>
+                    `;
+                });
+                
+                // Add delivery fee if needed
+                const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+                const total = deliveryType === 'delivery' ? subtotal + deliveryFee : subtotal;
+                
+                if (deliveryType === 'delivery') {
+                    html += `
+                        <div class="cart-item">
+                            <span>Delivery Fee</span>
+                            <span>R${deliveryFee.toFixed(2)}</span>
+                        </div>
+                    `;
+                }
+                
+                cartItems.innerHTML = html;
+                cartTotal.textContent = `Total: R${total.toFixed(2)}`;
+                
+                // Add event listeners to quantity buttons
+                document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        if (cart[index].quantity > 1) {
+                            cart[index].quantity--;
+                            updateCart();
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        cart[index].quantity++;
+                        updateCart();
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        cart.splice(index, 1);
+                        updateCart();
+                    });
+                });
+            }
+            
+            // Checkout button
+            document.getElementById('checkout-btn').addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                document.getElementById('payment-form').style.display = 'block';
+                this.style.display = 'none';
+            });
+            
+            // Process payment
+            document.getElementById('process-payment').addEventListener('click', function() {
+                const name = document.getElementById('name').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+                const address = deliveryType === 'delivery' ? document.getElementById('address').value.trim() : '';
+                const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+                
+                // Card payment fields
+                const cardNumber = paymentMethod === 'online' ? document.getElementById('card-number').value.trim() : '';
+                const expiryDate = paymentMethod === 'online' ? document.getElementById('expiry-date').value.trim() : '';
+                const cvv = paymentMethod === 'online' ? document.getElementById('cvv').value.trim() : '';
+                const cardName = paymentMethod === 'online' ? document.getElementById('card-name').value.trim() : '';
+                
+                // Validate fields
+                if (!name || !phone || (deliveryType === 'delivery' && !address)) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                if (paymentMethod === 'online') {
+                    if (!cardNumber || !expiryDate || !cvv || !cardName) {
+                        alert('Please fill in all card details');
+                        return;
+                    }
+                    
+                    // Simple card number validation
+                    if (!/^\d{16}$/.test(cardNumber.replace(/\s/g, ''))) {
+                        alert('Please enter a valid 16-digit card number');
+                        return;
+                    }
+                    
+                    // Simple expiry date validation
+                    if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+                        alert('Please enter expiry date in MM/YY format');
+                        return;
+                    }
+                    
+                    // Simple CVV validation
+                    if (!/^\d{3,4}$/.test(cvv)) {
+                        alert('Please enter a valid 3 or 4-digit CVV');
+                        return;
+                    }
+                }
+                
+                // Calculate total
+                let subtotal = 0;
+                cart.forEach(item => subtotal += item.price * item.quantity);
+                const total = deliveryType === 'delivery' ? subtotal + deliveryFee : subtotal;
+                
+                // Create order summary
+                let orderSummary = `New Order from ${name} (${phone}):\n\n`;
+                cart.forEach(item => {
+                    orderSummary += `${item.name} x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}\n`;
+                });
+                
+                orderSummary += `\nSubtotal: R${subtotal.toFixed(2)}\n`;
+                if (deliveryType === 'delivery') {
+                    orderSummary += `Delivery Fee: R${deliveryFee.toFixed(2)}\n`;
+                }
+                orderSummary += `Total: R${total.toFixed(2)}\n\n`;
+                orderSummary += `Payment Method: ${paymentMethod === 'online' ? 'Card Payment' : 'Cash on Delivery'}\n`;
+                if (paymentMethod === 'online') {
+                    orderSummary += `Card: **** **** **** ${cardNumber.slice(-4)}\n`;
+                }
+                orderSummary += `\n${deliveryType === 'delivery' ? 'Delivery to: ' + address : 'For collection'}`;
+                
+                // Process payment
+                processPayment(total, orderSummary, paymentMethod === 'online');
+            });
+
+            function processPayment(amount, orderSummary, isOnlinePayment) {
+                // Show loading state
+                const processBtn = document.getElementById('process-payment');
+                processBtn.disabled = true;
+                processBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                
+                // Simulate payment processing (2 seconds)
+                setTimeout(() => {
+                    if (isOnlinePayment) {
+                        // Simulate successful payment deduction
+                        console.log(`Deducted R${amount.toFixed(2)} from customer's card`);
+                    }
+                    
+                    // Send WhatsApp notification to owner
+                    sendWhatsAppNotification(orderSummary);
+                    
+                    // Show success message
+                    document.getElementById('payment-form').style.display = 'none';
+                    document.getElementById('payment-success').style.display = 'block';
+                    document.getElementById('order-summary').innerHTML = orderSummary.replace(/\n/g, '<br>');
+                    
+                    // Clear cart
+                    cart.length = 0;
+                    updateCart();
+                    
+                    // Reset button
+                    processBtn.disabled = false;
+                    processBtn.textContent = 'Complete Order';
+                }, 2000);
+            }
+
+            function sendWhatsAppNotification(message) {
+                const phone = '0731575601';
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+                
+                // In a real app, you would use a WhatsApp API service to send this automatically
+                console.log(`WhatsApp notification would be sent to: ${whatsappUrl}`);
+                
+                // For demo purposes, we'll show an alert
+                alert(`Order confirmed! Payment processed successfully. WhatsApp notification would be sent to ${phone}`);
+                
+                // In production, you would actually send the message via:
+                // 1. A WhatsApp Business API integration, or
+                // 2. Opening a new window with the WhatsApp URL (requires user action)
+                // window.open(whatsappUrl, '_blank');
+            }
+            
+            // Cancel order button
+            document.getElementById('cancel-order').addEventListener('click', function() {
+                if (confirm('Are you sure you want to cancel this order?')) {
+                    document.getElementById('payment-form').style.display = 'none';
+                    document.getElementById('checkout-btn').style.display = 'block';
+                    document.getElementById('payment-success').style.display = 'none';
+                }
+            });
+            
+            // New order button
+            document.getElementById('new-order').addEventListener('click', function() {
+                document.getElementById('payment-success').style.display = 'none';
+                document.getElementById('checkout-btn').style.display = 'block';
+                document.getElementById('payment-form').reset();
+                document.getElementById('address-group').style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
