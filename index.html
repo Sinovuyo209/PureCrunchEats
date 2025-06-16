@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PureCrunchEats - Smoothies & Chicken</title>
+    <title>PureCrunchEats - Order Online</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="logo">PureCrunchEats</div>
-        <p>Healthy Smoothies & Crispy Chicken - Order Online</p>
+        <p>Premium Smoothies & Chicken - Order Online</p>
     </header>
 
     <div class="container">
@@ -20,35 +20,40 @@
         <div class="menu">
             <!-- Smoothies -->
             <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Strawberry Smoothie" class="menu-image">
-                <div class="item-name">STRAWBERRY DELIGHT</div>
-                <div class="item-ingredients">Strawberries, Banana, Yogurt, Honey</div>
-                <img src="smoothie.jpg" alt="Smoothie Preview" class="smoothie-preview">
+                <img src="smoothie-menu.jpg" alt="Smoothie Menu" class="menu-image">
+                <div class="item-name">STRAWBERRY BLISS</div>
+                <div class="item-ingredients">Fresh strawberries, banana, Greek yogurt, honey</div>
                 <div class="price">R32.00</div>
-                <button class="add-to-cart" data-name="STRAWBERRY DELIGHT" data-price="32.00">Add to Cart</button>
+                <button class="add-to-cart" data-name="STRAWBERRY BLISS" data-price="32.00">Add to Cart</button>
             </div>
             
             <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Blueberry Smoothie" class="menu-image">
-                <div class="item-name">BLUEBERRY BLAST</div>
-                <div class="item-ingredients">Blueberries, Banana, Almond Milk, Chia Seeds</div>
-                <img src="smoothie.jpg" alt="Smoothie Preview" class="smoothie-preview">
+                <img src="smoothie-menu.jpg" alt="Smoothie Menu" class="menu-image">
+                <div class="item-name">BLUEBERRY BURST</div>
+                <div class="item-ingredients">Blueberries, banana, almond milk, chia seeds</div>
                 <div class="price">R35.00</div>
-                <button class="add-to-cart" data-name="BLUEBERRY BLAST" data-price="35.00">Add to Cart</button>
+                <button class="add-to-cart" data-name="BLUEBERRY BURST" data-price="35.00">Add to Cart</button>
             </div>
             
             <div class="menu-item">
-                <img src="smoothie-menu.jpg" alt="Tropical Smoothie" class="menu-image">
-                <div class="item-name">TROPICAL MIX</div>
-                <div class="item-ingredients">Mango, Pineapple, Orange Juice, Coconut</div>
-                <img src="smoothie.jpg" alt="Smoothie Preview" class="smoothie-preview">
+                <img src="smoothie-menu.jpg" alt="Smoothie Menu" class="menu-image">
+                <div class="item-name">TROPICAL SUNSET</div>
+                <div class="item-ingredients">Mango, pineapple, orange juice, coconut</div>
                 <div class="price">R36.00</div>
-                <button class="add-to-cart" data-name="TROPICAL MIX" data-price="36.00">Add to Cart</button>
+                <button class="add-to-cart" data-name="TROPICAL SUNSET" data-price="36.00">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <img src="smoothie-menu.jpg" alt="Smoothie Menu" class="menu-image">
+                <div class="item-name">GREEN ENERGY</div>
+                <div class="item-ingredients">Spinach, kale, apple, banana, ginger</div>
+                <div class="price">R34.00</div>
+                <button class="add-to-cart" data-name="GREEN ENERGY" data-price="34.00">Add to Cart</button>
             </div>
             
             <!-- Chicken Items -->
             <div class="menu-item">
-                <img src="wing-fries.jpg" alt="Single Wing" class="menu-image">
+                <img src="wing-fries.jpg" alt="Chicken Wings" class="menu-image">
                 <div class="item-name">1 CRISPY WING</div>
                 <div class="item-ingredients">Juicy chicken wing with secret spices</div>
                 <div class="price">R8.00</div>
@@ -57,18 +62,18 @@
             
             <div class="menu-item">
                 <img src="wing-fries.jpg" alt="Wing Combo" class="menu-image">
-                <div class="item-name">4 WINGS + FRIES COMBO</div>
+                <div class="item-name">4 WINGS + FRIES</div>
                 <div class="item-ingredients">4 wings with small fries and sauce</div>
                 <div class="price">R40.00</div>
-                <button class="add-to-cart" data-name="4 WINGS + FRIES COMBO" data-price="40.00">Add to Cart</button>
+                <button class="add-to-cart" data-name="4 WINGS + FRIES" data-price="40.00">Add to Cart</button>
             </div>
             
             <div class="menu-item">
                 <img src="wing-fries.jpg" alt="Fries" class="menu-image">
-                <div class="item-name">SMALL FRIES WITH SAUCE</div>
+                <div class="item-name">FRIES WITH SAUCE</div>
                 <div class="item-ingredients">Crispy fries with dipping sauce</div>
                 <div class="price">R13.00</div>
-                <button class="add-to-cart" data-name="SMALL FRIES WITH SAUCE" data-price="13.00">Add to Cart</button>
+                <button class="add-to-cart" data-name="FRIES WITH SAUCE" data-price="13.00">Add to Cart</button>
             </div>
         </div>
 
@@ -89,11 +94,11 @@
                 <p>Account Number: <strong>2016489258</strong></p>
                 <p>Branch Code: <strong>470010</strong></p>
                 <p>Reference: Please use your name as reference</p>
-                <p>Delivery fee: <strong>R3.00</strong> (if delivery selected)</p>
+                <p>Delivery fee: <strong>R3.00</strong></p>
             </div>
 
             <div class="payment-form" id="payment-form">
-                <h3>Order & Payment Details</h3>
+                <h3>Complete Your Order</h3>
                 <div class="form-group">
                     <label for="name">Full Name *</label>
                     <input type="text" id="name" required>
@@ -102,6 +107,7 @@
                     <label for="phone">Phone Number *</label>
                     <input type="tel" id="phone" required>
                 </div>
+                
                 <div class="delivery-options">
                     <div class="delivery-option">
                         <input type="radio" id="collection" name="delivery" value="collection" checked>
@@ -112,36 +118,50 @@
                         <label for="delivery">Delivery (R3 fee)</label>
                     </div>
                 </div>
+                
                 <div class="form-group" id="address-group" style="display:none;">
                     <label for="address">Delivery Address *</label>
                     <textarea id="address"></textarea>
                 </div>
-                <div class="bank-payment">
-                    <h4>Bank Details for Payment</h4>
-                    <div class="form-group">
-                        <label for="bank-name">Bank Name *</label>
-                        <input type="text" id="bank-name" required>
+                
+                <div class="payment-methods">
+                    <h4>Payment Method *</h4>
+                    <div class="payment-option">
+                        <input type="radio" id="pay-online" name="payment" value="online" checked>
+                        <label for="pay-online">
+                            <i class="fas fa-mobile-alt"></i> Pay Now (Bank Transfer)
+                        </label>
+                        <div class="bank-details">
+                            <div class="form-group">
+                                <label for="bank-name">Your Bank Name *</label>
+                                <input type="text" id="bank-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="account-number">Your Account Number *</label>
+                                <input type="text" id="account-number" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="account-number">Account Number *</label>
-                        <input type="text" id="account-number" required>
+                    
+                    <div class="payment-option">
+                        <input type="radio" id="pay-delivery" name="payment" value="delivery">
+                        <label for="pay-delivery">
+                            <i class="fas fa-money-bill-wave"></i> Pay on Delivery (Cash)
+                        </label>
                     </div>
                 </div>
-                <button class="checkout-btn" id="process-payment">Pay Now</button>
+                
+                <button class="checkout-btn" id="process-payment">Complete Order</button>
                 <button class="cancel-btn" id="cancel-order">Cancel</button>
-                
-                <div class="payment-processing" id="payment-processing">
-                    <div class="loader"></div>
-                    <p>Processing payment to PureCrunchEats...</p>
-                </div>
-                
-                <div class="payment-success" id="payment-success">
-                    <i class="fas fa-check-circle"></i>
-                    <h3>Payment Successful!</h3>
-                    <p>Money sent to Capitec 2016489258</p>
-                    <p>Notification sent to 0731575601</p>
-                    <div class="order-summary" id="order-summary"></div>
-                </div>
+            </div>
+
+            <div class="payment-success" id="payment-success">
+                <i class="fas fa-check-circle"></i>
+                <h3>Order Confirmed!</h3>
+                <p>Payment processed successfully</p>
+                <p>Notification sent to 0731575601</p>
+                <div class="order-summary" id="order-summary"></div>
+                <button class="checkout-btn" id="new-order">New Order</button>
             </div>
         </div>
     </div>
