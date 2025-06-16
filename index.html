@@ -20,25 +20,28 @@
         <div class="menu">
             <!-- Smoothies -->
             <div class="menu-item">
-                <img src="smoothie.jpg" alt="Strawberry Smoothie" class="menu-image">
+                <img src="smoothie-menu.jpg" alt="Strawberry Smoothie" class="menu-image">
                 <div class="item-name">STRAWBERRY DELIGHT</div>
                 <div class="item-ingredients">Strawberries, Banana, Yogurt, Honey</div>
+                <img src="smoothie.jpg" alt="Smoothie Preview" class="smoothie-preview">
                 <div class="price">R32.00</div>
                 <button class="add-to-cart" data-name="STRAWBERRY DELIGHT" data-price="32.00">Add to Cart</button>
             </div>
             
             <div class="menu-item">
-                <img src="smoothie.jpg" alt="Blueberry Smoothie" class="menu-image">
+                <img src="smoothie-menu.jpg" alt="Blueberry Smoothie" class="menu-image">
                 <div class="item-name">BLUEBERRY BLAST</div>
                 <div class="item-ingredients">Blueberries, Banana, Almond Milk, Chia Seeds</div>
+                <img src="smoothie.jpg" alt="Smoothie Preview" class="smoothie-preview">
                 <div class="price">R35.00</div>
                 <button class="add-to-cart" data-name="BLUEBERRY BLAST" data-price="35.00">Add to Cart</button>
             </div>
             
             <div class="menu-item">
-                <img src="smoothie.jpg" alt="Tropical Smoothie" class="menu-image">
+                <img src="smoothie-menu.jpg" alt="Tropical Smoothie" class="menu-image">
                 <div class="item-name">TROPICAL MIX</div>
                 <div class="item-ingredients">Mango, Pineapple, Orange Juice, Coconut</div>
+                <img src="smoothie.jpg" alt="Smoothie Preview" class="smoothie-preview">
                 <div class="price">R36.00</div>
                 <button class="add-to-cart" data-name="TROPICAL MIX" data-price="36.00">Add to Cart</button>
             </div>
@@ -96,7 +99,7 @@
                     <input type="text" id="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="phone">Phone Number (WhatsApp) *</label>
+                    <label for="phone">Phone Number *</label>
                     <input type="tel" id="phone" required>
                 </div>
                 <div class="delivery-options">
@@ -113,14 +116,6 @@
                     <label for="address">Delivery Address *</label>
                     <textarea id="address"></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="payment-method">Payment Method *</label>
-                    <select id="payment-method" required>
-                        <option value="instant">Instant Bank Payment</option>
-                        <option value="capitec">Capitec Pay</option>
-                        <option value="cash">Cash on Collection</option>
-                    </select>
-                </div>
                 <div class="bank-payment">
                     <h4>Bank Details for Payment</h4>
                     <div class="form-group">
@@ -134,19 +129,17 @@
                 </div>
                 <button class="checkout-btn" id="process-payment">Pay Now</button>
                 <button class="cancel-btn" id="cancel-order">Cancel</button>
-            </div>
-
-            <div class="verification-section" id="verification-section">
-                <div class="payment-processing">
+                
+                <div class="payment-processing" id="payment-processing">
                     <div class="loader"></div>
                     <p>Processing payment to PureCrunchEats...</p>
                 </div>
-                <div class="payment-success" style="display:none;">
+                
+                <div class="payment-success" id="payment-success">
                     <i class="fas fa-check-circle"></i>
                     <h3>Payment Successful!</h3>
-                    <p>Money deducted and sent to Capitec 2016489258</p>
-                    <p>Order notification sent to 0731575601</p>
-                    <p>Ready in 5 minutes</p>
+                    <p>Money sent to Capitec 2016489258</p>
+                    <p>Notification sent to 0731575601</p>
                     <div class="order-summary" id="order-summary"></div>
                 </div>
             </div>
